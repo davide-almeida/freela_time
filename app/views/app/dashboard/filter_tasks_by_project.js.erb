@@ -1,0 +1,13 @@
+$('select#task_schedule_task_id').html('<%= j options_from_collection_for_select(@filtered_tasks, :id, :name) %>');
+<% if @filtered_tasks.present? %>
+    $('#task_schedule_task_id').append($("<option disabled selected hidden></option>").attr("value","").text('Selecione a tarefa'));
+<% else %>
+    $('#task_schedule_task_id')
+        .find('option')
+        .remove()
+        .end()
+    ;
+    $('#task_schedule_task_id').append($("<option disabled selected hidden></option>").attr("value","").text('Não há tarefas neste projeto'));
+<% end %>
+
+

@@ -1,0 +1,16 @@
+'pt-BR':
+  # activerecord:
+  #   attributes:
+  #     user:
+  #       id: Código
+  #       email: Email
+  #       first_name: Nome
+  #       last_name: Sobrenome
+  #       password: Senha
+  #       password_confirmation: Confirmação da Senha
+  #       created_at: Criado em
+  #       updated_at: Atualizado em
+  #     task_schedule:
+  #       start_date: Hora de início
+  #       end_date: Hora de conclusão
+  #       task_id: Tarefaaa

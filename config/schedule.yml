@@ -1,0 +1,4 @@
+daily_job:
+  # cron: "*/1 * * * *" # every minute
+  cron: "0 0 * * *" # every day - midnight
+  class: "App::DailyWorker"

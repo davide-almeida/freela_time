@@ -1,0 +1,10 @@
+'pt-BR':
+  activerecord:
+    errors:
+      models:
+        format: "%{message}"
+        task_schedule:
+          format: "%{message}"
+          attributes:
+            task_id:
+              blank: O campo Tarefa deve ser preenchido.

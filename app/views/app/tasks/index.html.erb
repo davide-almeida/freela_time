@@ -1,0 +1,122 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <p class="mb-0">
+        <%#= @task.project.company.name %>
+    </p>
+    <h1 class="h3 mb-2 text-gray-800">Tarefas</h1>
+    <!--
+    <p class="mb-4">
+        Alguma descrição...
+    </p>
+    -->
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tarefas</li>
+                    <li class="breadcrumb-item active" aria-current="page"><%= @tasks_page_title %></li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Opções</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to new_app_task_path, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-tasks"></i>
+                                    </span>
+                                    <span class="text">Cadastrar tarefa</span>
+                                <% end %>
+                            </div>
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to @link_tasks, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span class="text"><%= @link_tasks_button %></span>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tarefas pendentes</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>Projeto</th>
+                            <th>Tarefa</th>
+                            <th>Horas trabalhadas</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @tasks.each do |task| %>
+                            <tr>
+                                <td><%= task.company.name %></td>
+                                <td><%= task.project.name %></td>
+                                <td><%= task.name %></td>
+                                <td>
+                                    <% sum_time(task) %> <%#sum task_schedule (helper)%>
+                                    <% calc_time(@task_schedule_hour, @task_schedule_minute, @task_schedule_second) %> <%#convert time (helper)%>
+                                    <%# show result %>
+                                    <%= @calc_hour %>:<%= @calc_minute %>:<%= @calc_second %>
+                                </td>
+                                <td><%= task.status %></td>
+
+                                <td width="12%" class="text-center">
+                                    <%# task_status change %>
+                                    <% if task.status == "A fazer" %>
+                                        <% @change_button_description = "Status: Em desenvolvimento" %>
+                                    <% elsif task.status == "Em desenvolvimento" %>
+                                        <% @change_button_description = "Status: Concluído" %>
+                                    <% elsif task.status == "Concluído" %>
+                                        <% @change_button_description = "Status: A fazer" %>
+                                    <% end %>
+                                    <%# action buttons %>
+                                    <%= link_to app_task_change_status_path(task.id, :status => task.status), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                        <i class="fas fa-fw fa-check"></i>
+                                    <% end %>
+                                    <%= link_to new_app_task_task_schedule_path(task.id), class: "btn btn-info btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Horários"} do  %>
+                                        <i class="fas fa-fw fa-clock"></i>
+                                    <% end %>
+                                    <%= link_to edit_app_task_path(task.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    <% end %>
+                                    <%= link_to app_task_path(task.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir esta tarefa?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    <% end %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

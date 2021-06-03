@@ -1,0 +1,64 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <p class="mb-0">
+        <%= @task.project.company.name %> / <%= @task.project.name %>
+    </p>
+    <h1 class="h3 mb-2 text-gray-800"><%= @task.name %> - Horários</h1>
+    <!--
+    <p class="mb-4">
+        Alguma descrição...
+    </p>
+    -->
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "Tarefas", app_tasks_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "Horários", new_app_task_task_schedule_path(@task.id) %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                    <!-- <li class="breadcrumb-item active" aria-current="page">Data</li> -->
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Editar horário</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-lg-12 col-xs-12">
+                        <%= form_for([:app, @task, @task_schedule]) do |f| %>
+                            <div class="form-row">
+                                <div class="form-group col-md-4 col-lg-3 col-xs-12">
+                                    <label>Início</label>
+                                    <%= f.datetime_field :start_date, class:"form-control", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-3 col-xs-12">
+                                    <label>Conclusão</label>
+                                    <%= f.datetime_field :end_date, class:"form-control", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-3 col-xs-12">
+                                    <label>Tempo decorrido</label>
+                                    <%= f.text_field :work_hour, class:"form-control times1", placeholder:"Ex.: 23:30:00" %>
+                                    <span class="far fa-clock times1-clock"></span>
+                                </div>
+                                <div class="form-group col-lg-12 col-xs-12">
+                                    <%= f.submit "Cadastrar", class:"btn btn-primary", data: { disable_with: "Aguarde..." } %>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+<!-- https://yarnpkg.com/package/toastify-js -->

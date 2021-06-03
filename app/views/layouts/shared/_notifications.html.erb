@@ -1,0 +1,34 @@
+<% if notice %>
+  <%#= javascript_tag "$.notify( { message: '#{notice}'}, { type: 'success', placement: { from: 'top', align: 'center' }});" %>
+  <script type="text/javascript">
+    // document.addEventListener("turbolinks:load", () => {
+      Toastify({
+          text: "<%= notice %>",
+          duration: 4000,
+          gravity: "top", // `top` or `bottom`
+          position: "center", // `left`, `center` or `right`
+          // backgroundColor: "linear-gradient(to right, #4e73df, #224abe)",
+          // background: "linear-gradient(to right, #4e73df, #96c93d)",
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+      }).showToast();
+      // console.log('Cadastrou!!');
+    // });
+  </script>
+
+<% end %>
+
+<% if alert %>
+    <script type="text/javascript">
+    // document.addEventListener("turbolinks:load", () => {
+      Toastify({
+          text: "<%= alert %>",
+          duration: 4000,
+          gravity: "top", // `top` or `bottom`
+          position: "center", // `left`, `center` or `right`
+          backgroundColor: "linear-gradient(to right, #ff0000, #b90000)",
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+      }).showToast();
+      // console.log('Erro!!');
+    // });
+  </script>
+<% end %>

@@ -1,0 +1,98 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Empresas</h1>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Empresas</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Opções</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to new_app_company_path, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-building"></i>
+                                    </span>
+                                    <span class="text">Cadastrar empresa</span>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTales -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Empresas cadastradas</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Quant. de projetos</th>
+                            <th>Quant. de tasks</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @companies.each do |company| %>
+                            <tr>
+                                <td><%= company.name %></td>
+                                <td>
+                                    <% projects_count = company.projects.count %>
+                                    <% if projects_count > 0 %>
+                                        <%= projects_count %>
+                                    <% else %>
+                                       <i>Não há projetos cadastrados.</i>
+                                    <% end %>
+                                </td>
+                                <% tasks_count = 0 %>
+                                <% company.projects.each do |project| %>
+                                    <% tasks_count = tasks_count + project.tasks.count %>
+                                <% end %>
+                                <td>
+                                    <% if tasks_count > 0 %>
+                                        <%= tasks_count %>
+                                    <% else %>
+                                        <i>Não há tarefas cadastradas.</i>
+                                    <% end %>
+                                </td>
+                                <td width="5%">
+                                    <%= link_to edit_app_company_path(company.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    <% end %>
+                                    <%= link_to app_company_path(company.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir a empresa #{company.name}, seus respectivos projetos e empresas?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    <% end %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,93 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Projetos</h1>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "Projetos", app_projects_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cadastrar projetos</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Cadastrar projeto</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-lg-12 col-xs-12">
+                        <%= form_for([:app, @project]) do |f| %>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                                    <label>Empresa</label>
+                                    <%= f.collection_select :company_id, @company_options_for_select, :id, :name, { }, {:class =>"form-control", :tabindex => "-1"} %>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                                    <label>Nome</label>
+                                    <%= f.text_field :name, class:"form-control", placeholder:"Digite o nome do projeto aqui.", required:"required" %>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12">
+                                    <label>Tipo de pagamento</label>
+                                    <%= f.select(:payment_type, @payment_type_options_for_select, {}, {:class =>"form-control", :tabindex => "-1", include_blank: false}) %>
+                                </div>
+                                <%= f.fields_for :by_hour do |byHour| %>
+                                    <div class="byHour form-group col-md-6 col-lg-6 col-xs-12">
+                                        <label>Valor hora</label>
+                                        <%= byHour.text_field :hour_price, class:"form-control real", placeholder:"Valor hora de trabalho. Ex.: 30,50", required:"required" %>
+                                    </div>
+                                    <div class="byHour form-group col-md-6 col-lg-6 col-xs-12">
+                                        <label>Recorrência</label>
+                                        <%= byHour.select(:recurrence, options_for_recurrence(@project.by_hour.recurrence), {:selected => "Apenas uma vez"}, {:class =>"form-control", :tabindex => "-1", include_blank: false}) %>
+                                    </div>
+                                    <div class="byHour form-group col-md-6 col-lg-6 col-xs-12">
+                                        <label>Data pagamento</label>
+                                        <%= byHour.date_field :start_pay_day, class:"form-control datepicker", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                    </div>
+                                <% end %>
+
+                                <div class="byProject form-group col-md-6 col-lg-6 col-xs-12">
+                                    <label>Por projeto</label>
+                                    <%#= f.date_field :pay_day, class:"form-control datepicker", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                </div>
+
+                                <!--
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12">
+                                    <a href="#collapseExample" class="btn btn-primary btn-icon-split btn-sm" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-repeat"></i>
+                                        </span>
+                                        <span class="text">Pagamento recorrente</span>
+                                    </a>
+                                </div>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="form-group col-md-12 col-lg-12 col-xs-12">
+                                        <div class="card card-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12">
+                                    <label>Descrição</label>
+                                    <%= f.text_area :description, class:"form-control", placeholder:"Você pode escrever aqui uma breve descrição do projeto." %>
+                                </div>
+                                <div class="form-group col-lg-12 col-xs-12">
+                                    <%= f.submit "Cadastrar", class:"btn btn-primary", data: { disable_with: "Aguarde..." } %>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

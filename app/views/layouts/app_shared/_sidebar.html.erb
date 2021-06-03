@@ -1,0 +1,154 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <!-- <i class="fas fa-laugh-wink"></i> -->
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Freela Time</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <%= link_to app_root_path, class:'nav-link' do %>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        <% end %>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Gerenciamento
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <%= link_to app_companies_path, class:'nav-link' do %>
+            <i class="fas fa-building"></i>
+            <span>Empresas</span>
+        <% end %>
+    </li>
+
+    <li class="nav-item">
+        <%= link_to app_projects_path, class:'nav-link' do %>
+            <i class="fas fa-folder"></i>
+            <span>Projetos</span>
+        <% end %>
+    </li>
+    
+    <li class="nav-item">
+        <%= link_to app_tasks_path, class:'nav-link' do %>
+            <i class="fas fa-fw fa-tasks"></i>
+            <span>Tarefas</span>
+        <% end %>
+    </li>
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <%= link_to app_root_path, class:'nav-link' do %>
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>Metas</span>
+        <% end %>
+    </li>
+    
+    <!-- Nav Item - Financeiro -->
+    <li class="nav-item active">
+        <%= link_to app_in_payments_path, class:'nav-link' do %>
+            <i class="fas fa-fw fa-donate"></i>
+            <span>Financeiro</span>
+        <% end %>
+    </li>
+
+    <!-- Nav Item - Storage -->
+    <li class="nav-item active">
+        <%= link_to new_app_project_storage_path, class:'nav-link' do %>
+            <i class="fas fa-fw fa-hdd"></i>
+            <span>Armazenamento</span>
+        <% end %>
+    </li>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Análise
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Relatórios</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">Financeiro</a>
+                <a class="collapse-item" href="cards.html">Tempo de trabalho</a>
+                <a class="collapse-item" href="cards.html">Metas</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-lightbulb"></i>
+            <span>Insights</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="utilities-color.html">Financeiro</a>
+                <a class="collapse-item" href="utilities-border.html">Metas</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Suporte
+    </div>
+
+    <!-- Nav Item - Charts -->
+    <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+            <i class="fas fa-fw fa-comments"></i>
+            <span>Fale conosco</span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-question-circle"></i>
+            <span>Ajuda</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+    <!-- Sidebar Message -->
+    <div class="sidebar-card">
+        <%= image_tag "app/undraw_rocket.svg", class:"sidebar-card-illustration mb-2", alt:"..." %>
+        <p class="text-center mb-2"><strong>Freela Time Pro</strong> é uma versão sem anúncios, com ferramentas para armazenamento de arquivos, atribuição de metas e muito mais!</p>
+        <a class="btn btn-success btn-sm" href="#">Freela Time <strong>Pro</strong></a>
+    </div>
+
+</ul>
