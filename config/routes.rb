@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  #default routes
+  #default app routes
   namespace :app do
     root to: 'dashboard#index'
     get 'dashboard', to: 'dashboard#index'
@@ -29,14 +29,16 @@ Rails.application.routes.draw do
       end
     end
     resources :project_storages
+    resources :goals
   end
   
+  #default site routes
   namespace :site do
     root to: 'home#index'
     get 'home', to: 'home#index'
   end
 
-  #devise
+  #devise routes
   devise_for :users#, :skip => [:registrations]
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'

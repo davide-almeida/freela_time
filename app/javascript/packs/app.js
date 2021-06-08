@@ -49,7 +49,7 @@ $(document).on('turbolinks:load', function() {
                     $.ajax({
                         url:  "/app/dashboard/filter_tasks_by_project",
                         type: "GET",
-                        data: { selected_company: $("select#task_schedule_project_id").val() }
+                        data: { selected_project: $("select#task_schedule_project_id").val() }
                     });
                     
                 });

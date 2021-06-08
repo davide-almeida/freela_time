@@ -1,0 +1,95 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Metas</h1>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Metas</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Opções</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to new_app_goal_path, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-chart-line"></i>
+                                    </span>
+                                    <span class="text">Cadastrar Meta</span>
+                                <% end %>
+                            </div>
+                            <!--
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to @link_projects, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span class="text"><%#= @link_projects_button %></span>
+                                <% end %>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><%#= @projects_page_title %>Metas</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Meta</th>
+                            <th>Período</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @goals.each do |goal| %>
+                            <% goal.goal_in_payments.each do |goal_in_payment| %>
+                                <tr>
+                                    <td><%= goal.goal_type %></td>
+                                    <td><%= humanized_money_with_symbol goal_in_payment.goal_value %></td>
+                                    <td><%= l(goal_in_payment.start_date.to_date) %> à <%= l(goal_in_payment.end_date.to_date) %></td>
+                                    <td><%#= goal_in_payment.status %> %</td>
+                                    <td width="10%">
+                                        <%# action buttons %>
+                                        <%= link_to edit_app_goal_path(goal_in_payment.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                            <i class="fas fa-fw fa-edit"></i>
+                                        <% end %>
+                                        <%= link_to app_goal_path(goal_in_payment.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir a meta do tipo #{goal.goal_type}?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                            <i class="fas fa-fw fa-trash"></i>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

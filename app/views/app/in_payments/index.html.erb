@@ -138,7 +138,9 @@
                             <th>Valor total</th>
                             <th>Valor parcela</th>
                             <th>Parcelas</th>
+                            <th>Fechamento</th>
                             <th>Vencimento</th>
+                            <th>Data pago</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -151,7 +153,15 @@
                                 <% in_payment.in_parcels.each do |in_parcel| %>
                                     <td><%= humanized_money_with_symbol in_parcel.value %></td>
                                     <td><%= in_parcel.parcel_number %></td>
+                                    <td><%= l(in_parcel.invoice_due_date) %></td>
                                     <td><%= l(in_parcel.due_date) %></td>
+                                    <td>
+                                        <% if in_parcel.paid_day.present? %>
+                                            <%= l(in_parcel.paid_day) %>
+                                        <% elsif %>
+                                            <i>Não foi pago</i>
+                                        <% end %>
+                                    </td>
                                     <td>
                                         <% if in_parcel.status == "Em atraso" %>
                                             <font color="red"><%= in_parcel.status %></font>

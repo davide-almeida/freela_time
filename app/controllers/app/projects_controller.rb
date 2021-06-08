@@ -46,15 +46,17 @@ class App::ProjectsController < AppController
 
           if @in_payment.save
             start_pay_day = @project.by_hour.start_pay_day
-            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day)
+            start_invoice_day = @project.by_hour.start_invoice_day
+            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
             @in_parcel.save
 
             if @in_parcel.save
               redirect_to app_projects_path, notice: "O projeto #{@project.name} e seu respectivo pagamento foram cadastrados com sucesso!"
               
               if @project.by_hour.recurrence == "Mensal"
-                due_date = start_pay_day.beginning_of_day + 1.month
-                App::NewInpaymentWorker.perform_at(due_date, @project.id)
+                invoice_due_date = start_invoice_day.beginning_of_day + 1.month
+                #invoice_due_date = Time.zone.now + 10.seconds #Para testes
+                App::NewInpaymentWorker.perform_at(invoice_due_date, @project.id)
               end
             else
               render :new
@@ -130,7 +132,7 @@ class App::ProjectsController < AppController
     def params_project
       params.require(:project).permit(
         :name, :description, :status, :hour_price, :payment_type, :company_id,
-        by_hour_attributes:[:start_pay_day, :hour_price, :recurrence, :_destroy, :id]
+        by_hour_attributes:[:start_pay_day, :start_invoice_day, :hour_price, :recurrence, :_destroy, :id]
       )
     end
     

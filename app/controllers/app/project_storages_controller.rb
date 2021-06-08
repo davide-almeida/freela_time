@@ -1,10 +1,33 @@
 class App::ProjectStoragesController < AppController
   before_action :set_project_storage, only: [:edit, :update, :destroy]
 
+  def calc_percent(v1, v2)
+    #v1 = equivale vale a 100%
+    #v2 = equivale vale a X
+    (v1*100)/v2.to_f
+  end
+
   def new
     @project_storages = current_user.project_storages.all
     @project_storage = ProjectStorage.new
     options_for_select
+
+    @storage_sum = 0
+    @project_storages.each do |storage|
+      @storage_sum += storage.file.byte_size
+    end
+    @limit_percent = 104857600 #100mb -> (104857600 / 1024 / 1024 = 100)
+    @ocuped_percent = calc_percent(@storage_sum, @limit_percent)
+    @ocuped_percent = @ocuped_percent.to_s(:rounded, precision: 2, round_mode: :up)
+    
+    
+    # @ocuped_percent = calc_percent(@limit_percent, @storage_sum)
+
+    # @ocuped_percent = @ocuped_percent.to_s(:human_size)
+    @storage_sum = @storage_sum.to_s(:human_size)
+
+    
+
   end
 
   def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_124448) do
+ActiveRecord::Schema.define(version: 2021_06_08_184056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_124448) do
     t.date "start_pay_day"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "start_invoice_day"
     t.index ["project_id"], name: "index_by_hours_on_project_id"
   end
 
@@ -62,6 +63,24 @@ ActiveRecord::Schema.define(version: 2021_05_25_124448) do
     t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
+  create_table "goal_in_payments", force: :cascade do |t|
+    t.integer "goal_value_cents"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.bigint "goal_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_id"], name: "index_goal_in_payments_on_goal_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.string "goal_type"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
   create_table "in_parcels", force: :cascade do |t|
     t.bigint "in_payment_id", null: false
     t.integer "value_cents"
@@ -70,6 +89,8 @@ ActiveRecord::Schema.define(version: 2021_05_25_124448) do
     t.date "due_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "invoice_due_date"
+    t.date "paid_day"
     t.index ["in_payment_id"], name: "index_in_parcels_on_in_payment_id"
   end
 
@@ -145,6 +166,8 @@ ActiveRecord::Schema.define(version: 2021_05_25_124448) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "by_hours", "projects"
   add_foreign_key "companies", "users"
+  add_foreign_key "goal_in_payments", "goals"
+  add_foreign_key "goals", "users"
   add_foreign_key "in_parcels", "in_payments"
   add_foreign_key "in_payments", "projects"
   add_foreign_key "in_payments", "users"

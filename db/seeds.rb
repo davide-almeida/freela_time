@@ -65,7 +65,13 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando ByHours..."
-ByHour.create!(hour_price_cents: 1000, recurrence: 3, start_pay_day: Time.zone.now.to_date + 12.days, project_id: 1)
+ByHour.create!(
+    hour_price_cents: 1000,
+    recurrence: 3,
+    start_pay_day: "2021-06-05", #Time.zone.now.to_date + 1.month,
+    start_invoice_day: "2021-06-01", #Time.zone.now.to_date + 1.month - 4.days,
+    project_id: 1
+)
 puts "ByHours cadastradas!"
 puts "-----------------------"
 
@@ -81,10 +87,22 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando InParcels..."
-InParcel.create!(in_payment_id: 1, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-03-05")
-InParcel.create!(in_payment_id: 2, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-04-05")
-InParcel.create!(in_payment_id: 3, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-05-05")
-InParcel.create!(in_payment_id: 4, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-06-05")
-InParcel.create!(in_payment_id: 5, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-07-05")
+InParcel.create!(in_payment_id: 1, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-03-05", invoice_due_date: "2021-03-01", paid_day: nil)
+InParcel.create!(in_payment_id: 2, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-04-05", invoice_due_date: "2021-04-01", paid_day: nil)
+InParcel.create!(in_payment_id: 3, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-05-05", invoice_due_date: "2021-05-01", paid_day: nil)
+InParcel.create!(in_payment_id: 4, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-06-05", invoice_due_date: "2021-06-01", paid_day: nil)
+InParcel.create!(in_payment_id: 5, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-07-05", invoice_due_date: "2021-07-01", paid_day: nil)
 puts "InParcels cadastradas!"
+puts "-----------------------"
+
+puts "-----------------------"
+puts "Cadastrando Goals..."
+Goal.create!(user_id: 1, goal_type:"Receita")
+puts "Goals cadastradas!"
+puts "-----------------------"
+
+puts "-----------------------"
+puts "Cadastrando GoalInPayments..."
+GoalInPayment.create!(goal_id: 1, goal_value_cents: 1000, start_date: Time.zone.now.at_beginning_of_month, end_date: Time.zone.now.at_end_of_month)
+puts "GoalInPayments cadastradas!"
 puts "-----------------------"

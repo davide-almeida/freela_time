@@ -43,11 +43,15 @@
                                         <label>Valor hora</label>
                                         <%= byHour.text_field :hour_price, class:"form-control real", placeholder:"Valor hora de trabalho. Ex.: 30,50", required:"required" %>
                                     </div>
-                                    <div class="byHour form-group col-md-6 col-lg-6 col-xs-12">
+                                    <div class="byHour form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Recorrência</label>
                                         <%= byHour.select(:recurrence, options_for_recurrence(@project.by_hour.recurrence), {:selected => "Apenas uma vez"}, {:class =>"form-control", :tabindex => "-1", include_blank: false}) %>
                                     </div>
-                                    <div class="byHour form-group col-md-6 col-lg-6 col-xs-12">
+                                    <div class="byHour form-group col-md-4 col-lg-4 col-xs-12">
+                                        <label>Data Fechamento Período</label>
+                                        <%= byHour.date_field :start_invoice_day, class:"form-control datepicker", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                    </div>
+                                    <div class="byHour form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Data pagamento</label>
                                         <%= byHour.date_field :start_pay_day, class:"form-control datepicker", placeholder:"Ex.: 10/03/2021", required:"required" %>
                                     </div>

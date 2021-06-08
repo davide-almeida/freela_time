@@ -63,6 +63,8 @@
                             <th>Descrição</th>
                             <th>valor</th>
                             <th>Tipo pagamento</th>
+                            <th>Data fechamento</th>
+                            <th>Data pagamento</th>
                             <th>Quant. de tasks</th>
                             <th>Status</th>
                             <th>Ações</th>
@@ -88,6 +90,8 @@
                                     <% end %>
                                 </td>
                                 <td><%= project.payment_type %></td>
+                                <td><%= l(project.by_hour.start_invoice_day) %></td>
+                                <td><%= l(project.by_hour.start_pay_day) %></td>
                                 <td>
                                     <% task_count = project.tasks.count %>
                                     <% if task_count > 0 %>

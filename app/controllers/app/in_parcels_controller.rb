@@ -14,11 +14,11 @@ class App::InParcelsController < AppController
     @in_parcel = InParcel.find(params[:in_parcel_id])
     @params_status = params[:status]
     if @params_status == "A pagar"
-      @in_parcel.update(:status => "Pago")
+      @in_parcel.update(:status => "Pago", :paid_day => Date.today)
     elsif @params_status == "Pago"
-      @in_parcel.update(:status => "Em atraso")
+      @in_parcel.update(:status => "Em atraso", :paid_day => nil)
     elsif @params_status == "Em atraso"
-      @in_parcel.update(:status => "A pagar")
+      @in_parcel.update(:status => "A pagar", :paid_day => nil)
     end
 
     # redirect

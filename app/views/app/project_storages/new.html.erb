@@ -26,6 +26,26 @@
         <div class="col-md-12 mb-4">
             <div class="card shadow mb-12">
                 <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Capacidade</h6>
+                </div>
+                <div class="card-body">
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h4 class="small font-weight-bold">Ocupado <%= @storage_sum %> de <%= @limit_percent.to_s(:human_size) %> <span class="float-right"><%= @ocuped_percent %>%</span></h4>
+                        <div class="progress mb-4">
+                            <div class="progress-bar" role="progressbar" style="width: <%=@ocuped_percent.gsub(",", ".")%>%" aria-valuenow="<%=@ocuped_percent%>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
                     <h6 class="m-0 font-weight-bold text-primary">Envio de arquivo</h6>
                 </div>
                 <div class="card-body">
