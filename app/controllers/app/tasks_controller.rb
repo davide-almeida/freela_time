@@ -1,19 +1,22 @@
 class App::TasksController < AppController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  include Scheduling
 
   def index
-    # @companies = current_user.companies.all
-
-    if params[:completed_tasks].nil?
+    if params[:completed_tasks] != "true"
       @tasks = current_user.tasks.where.not(status: 2)
       @link_tasks = app_tasks_path(:completed_tasks => true)
       @link_tasks_button = "Tarefas concluídas"
       @tasks_page_title = "Tarefas pendentes"
+      @fa_icon = "fas fa-check"
+      @button_class = "btn-primary"
     else
       @tasks = current_user.tasks.where(status: 2)
       @link_tasks = app_tasks_path
       @link_tasks_button = "Tarefas pendentes"
       @tasks_page_title = "Tarefas concluídas"
+      @fa_icon = "fa fa-list-ul"
+      @button_class = "btn-success"
     end
   
   end
@@ -50,6 +53,10 @@ class App::TasksController < AppController
 
   def destroy
     task_name = @task.name
+    task_id = @task.id
+    task_string_time = params[:task_total_work_time]
+    raise
+    destroy_in_payment_from_task(task_string_time, task_id)
 
     if @task.destroy
       redirect_to app_tasks_path, notice: "A tarefa #{task_name} foi excluida com sucesso!"

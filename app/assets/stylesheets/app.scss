@@ -69,3 +69,23 @@
   display:none;
   transition: .35s cubic-bezier(0.190, 1.000, 0.220, 1.000);
 }
+
+.card-tasks-dashboard {
+  min-height: 100%;
+}
+
+// PDF generator
+@media print {
+  /* Hide everything in the body when printing... */
+  body { visibility: hidden; }
+  /* ...except our special div. */
+  #section-to-print, #section-to-print * {
+    visibility: visible
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

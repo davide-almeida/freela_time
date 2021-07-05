@@ -2,8 +2,8 @@ class App::ProjectStoragesController < AppController
   before_action :set_project_storage, only: [:edit, :update, :destroy]
 
   def calc_percent(v1, v2)
-    #v1 = equivale vale a 100%
-    #v2 = equivale vale a X
+    #v1 = equivale a 100%
+    #v2 = equivale a X
     (v1*100)/v2.to_f
   end
 

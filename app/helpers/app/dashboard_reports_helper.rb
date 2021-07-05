@@ -1,0 +1,2 @@
+module App::DashboardReportsHelper
+end

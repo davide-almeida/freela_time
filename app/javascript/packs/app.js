@@ -83,6 +83,22 @@ $(document).on('turbolinks:load', function() {
         }
     }
 
+    // select load - dashboard_report Modal
+    if ($('#dashboard_report').length) {
+        // company select
+        if ($('select#dashboard_report_project_id').length) {
+            $(function() {
+                $("select#dashboard_report_company_id").on("change", function() {
+                    $.ajax({
+                        url:  "/app/dashboard/filter_dashboard_report_projects_by_company",
+                        type: "GET",
+                        data: { selected_company: $("select#dashboard_report_company_id").val() }
+                    });
+                });
+            });
+        }
+    }
+
     
 
     // máscaras:
@@ -141,4 +157,20 @@ $(document).on('turbolinks:load', function() {
         });
     }
     
+    // dashboard_print_report page
+    // if ($("#printableArea").length) {
+        // const printDiv = document.querySelector('#print-btn');
+
+    //     window.printDiv(divName) = function printDiv(divName) {
+    //         console.log("Entrou na function");
+    //         var printContents = document.getElementById(divName).innerHTML;
+    //         var originalContents = document.body.innerHTML;
+       
+    //         document.body.innerHTML = printContents;
+       
+    //         window.print();
+       
+    //         document.body.innerHTML = originalContents;
+    //    }
+    // }
 });

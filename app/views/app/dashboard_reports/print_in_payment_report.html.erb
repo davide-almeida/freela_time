@@ -1,0 +1,159 @@
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Imprimir relatório <%#= @task_schedules.count %></h1>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Imprimir relatório</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Opções</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <!--<button id="print-btn" class="btn btn-primary btn-icon-split" onclick="printDiv('printableArea')">-->
+                                <!--<button id="print-btn" class="btn btn-primary btn-icon-split" onclick="printDiv('printableArea')">-->
+                                <button id="button" class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span class="text">Gerar PDF</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section-to-print">
+        <div class="card">
+            <div class="card-header"><strong>Relatório do projeto "<%= @project.name %>" referente ao período de <%=l(@start_date.to_date)%> à <%=l(@end_date.to_date)%></strong></div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-sm">
+                        <h6 class=""><strong>Desenvolvimento:</strong></h6>
+                        <div>Nome: <%=current_user.first_name%> <%=current_user.last_name%></div>
+                        <div>Email: <%= current_user.email %></div>
+                        <!-- <div>Telefone: (84) 98892 3608</div> -->
+                    </div>
+                    <div class="col-sm">
+                        <h6 class=""><strong>Empresa/Cliente:</strong></h6>
+                        <div>Nome: <%= @company.name %></div>
+                        <!--<div>CNPJ: xxxxxxxxxxxx</div> -->
+                    </div>
+                    <!--
+                    <div class="col-sm">
+                        <h6 class=""><strong>Informações de pagamento:</strong></h6>
+                        <div>PIX: (84) 9889-23608</div>
+                        <div>Favorecido: Davide Almeida</div>
+                    </div> -->
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Projeto</th>
+                                        <th>Tarefa</th>
+                                        <th>Horas de trabalho</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% @total_sum = 0 %>
+                                    <% @tasks_list.each do |task| %>
+                                        <tr>
+                                            <td><%= task.project.name %></td>
+                                            <td><%= task.name %></td>
+                                            <td>
+                                                <% sum_time(task) %> <%#sum task_schedule (helper)%>
+                                                <% calc_time(@task_schedule_hour, @task_schedule_minute, @task_schedule_second) %> <%#convert time (helper)%>
+                                                <%# show result %>
+                                                <%= @calc_hour %>:<%= @calc_minute %>:<%= @calc_second %>
+                                            </td>
+                                            <td>
+                                                <% @hour_values_sum = convert_string_time_to_value_cents("#{@calc_hour}:#{@calc_minute}:#{@calc_second}", @project.by_hour.hour_price_cents) %>
+                                                <% @total_sum = @total_sum + @hour_values_sum %>
+                                                <%= humanized_money_with_symbol @hour_values_sum/100.to_f %>
+                                            </td>
+                                        </tr>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--<div class="col-lg-4 col-sm-5">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</div>-->
+                    <div class="col-lg-4 col-sm-5 ml-auto">
+                        <table class="table table-clear">
+                            <tbody>
+                                <tr>
+                                    <td class="left"><strong>Total</strong></td>
+                                    <td class="right"><strong><%= humanized_money_with_symbol @total_sum/100.to_f %></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    <%# var gAutoPrint = true;
+
+    function printDiv(){
+
+    if (document.getElementById != null){
+    var html = '<HTML>\n<HEAD>\n';
+    if (document.getElementsByTagName != null){
+    var headTags = document.getElementsByTagName("head");
+    if (headTags.length > 0) html += headTags[0].innerHTML;
+    }
+
+    html += '\n</HE' + 'AD>\n<BODY>\n';
+    var printReadyElem = document.getElementById("printableArea");
+
+    if (printReadyElem != null) html += printReadyElem.innerHTML;
+    else{
+    alert("Error, no contents.");
+    return;
+    }
+
+    html += '\n</BO' + 'DY>\n</HT' + 'ML>';
+    var printWin = window.open("","processPrint");
+    printWin.document.open();
+    printWin.document.write(html);
+    printWin.document.close();
+
+    if (gAutoPrint) printWin.print();
+    } else alert("Browser not supported.");
+
+    } %>
+
+    $('button').on('click',function(){
+        window.print()
+    })
+
+
+</script>

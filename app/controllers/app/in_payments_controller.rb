@@ -16,7 +16,7 @@ class App::InPaymentsController < AppController
     # Report Payable - END
     
     # Report Payd - START
-    @report_in_payments_month_payd = @in_payments_reports.joins(:in_parcels).where('status = ?', 1).where("due_date BETWEEN ? AND ?", Time.zone.now.at_beginning_of_month, Time.zone.now.at_end_of_month)
+    @report_in_payments_month_payd = @in_payments_reports.joins(:in_parcels).where('status = ?', 1).where("paid_day BETWEEN ? AND ?", Time.zone.now.at_beginning_of_month, Time.zone.now.at_end_of_month)
     @value_sum = 0
     @report_in_payments_month_payd.each do |in_payment|
       in_payment.in_parcels.each do |in_parcel|
@@ -40,7 +40,7 @@ class App::InPaymentsController < AppController
     # Report Late Payment - END
     
     # Report Payd Annual - START
-    @report_in_payments_payd_annual = @in_payments_reports.joins(:in_parcels).where('status = ?', 1).where("due_date BETWEEN ? AND ?", Time.zone.now.at_beginning_of_year, Time.zone.now.at_end_of_year)
+    @report_in_payments_payd_annual = @in_payments_reports.joins(:in_parcels).where('status = ?', 1).where("paid_day BETWEEN ? AND ?", Time.zone.now.at_beginning_of_year, Time.zone.now.at_end_of_year)
     @value_sum = 0
     @report_in_payments_payd_annual.each do |in_payment|
       in_payment.in_parcels.each do |in_parcel|
@@ -57,4 +57,8 @@ class App::InPaymentsController < AppController
 
   def edit
   end
+
+  def update
+  end
+
 end

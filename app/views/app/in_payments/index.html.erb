@@ -53,7 +53,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 À receber (mensal)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_month_payable_sum/100 %></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_month_payable_sum/100.to_f %></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-donate fa-2x text-gray-300"></i>
@@ -71,7 +71,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Recebido (Mensal)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_month_payd_sum/100 %></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_month_payd_sum/100.to_f %></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_payd_annual_sum/100 %></div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_payd_annual_sum/100.to_f %></div>
                                 </div>
                                 
                             </div>
@@ -112,7 +112,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Pagamento pendente</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_late_payment_sum/100 %></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol @report_in_payments_late_payment_sum/100.to_f %></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
@@ -135,9 +135,9 @@
                     <thead>
                         <tr>
                             <th>Projeto</th>
-                            <th>Valor total</th>
-                            <th>Valor parcela</th>
-                            <th>Parcelas</th>
+                            <th>Valor</th>
+                            <!--<th>Valor parcela</th> -->
+                            <!--<th>Parcelas</th> -->
                             <th>Fechamento</th>
                             <th>Vencimento</th>
                             <th>Data pago</th>
@@ -147,50 +147,52 @@
                     </thead>
                     <tbody>
                         <% @in_payments.each do |in_payment| %>
-                            <tr>
-                                <td><%= in_payment.project.name %></td>
-                                <td><%= humanized_money_with_symbol in_payment.in_parcels.sum(:value_cents)/100 %></td>
-                                <% in_payment.in_parcels.each do |in_parcel| %>
-                                    <td><%= humanized_money_with_symbol in_parcel.value %></td>
-                                    <td><%= in_parcel.parcel_number %></td>
-                                    <td><%= l(in_parcel.invoice_due_date) %></td>
-                                    <td><%= l(in_parcel.due_date) %></td>
-                                    <td>
-                                        <% if in_parcel.paid_day.present? %>
-                                            <%= l(in_parcel.paid_day) %>
-                                        <% elsif %>
-                                            <i>Não foi pago</i>
-                                        <% end %>
-                                    </td>
-                                    <td>
-                                        <% if in_parcel.status == "Em atraso" %>
-                                            <font color="red"><%= in_parcel.status %></font>
-                                        <% else %>
-                                            <%= in_parcel.status %>
-                                        <% end %>
-                                    </td>
-                                    <td width="12%">
-                                        <%# project_status change %>
-                                        <% if in_parcel.status == "A pagar" %>
-                                            <% @change_button_description = "Status: Pago" %>
-                                        <% elsif in_parcel.status == "Pago" %>
-                                            <% @change_button_description = "Status: Em atraso" %>
-                                        <% elsif in_parcel.status == "Em atraso" %>
-                                            <% @change_button_description = "Status: A pagar" %>
-                                        <% end %>
-                                        <%# action buttons %>
-                                        <%= link_to app_in_payment_in_parcel_change_status_path(in_parcel.in_payment.id, in_parcel.id, :status => in_parcel.status), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
-                                            <i class="fas fa-fw fa-check"></i>
-                                        <% end %>
-                                        <%#= link_to edit_app_project_path(project.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
-                                            <!--<i class="fas fa-fw fa-edit"></i> -->
-                                        <%# end %>
-                                        <%#= link_to app_project_path(project.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir o projeto #{project.name} e suas respectivas tarefas?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
-                                            <!-- <i class="fas fa-fw fa-trash"></i> -->
-                                        <%# end %>
-                                    </td>
-                                <% end %>
-                            </tr>
+                            <% in_payment.in_parcels.each do |in_parcel| %>
+                                <tr>
+                                    <td><%= in_payment.project.name %></td>
+                                    <td><%= humanized_money_with_symbol in_payment.in_parcels.sum(:value_cents)/100.to_f %></td>
+                                    <%# in_payment.in_parcels.each do |in_parcel| %>
+                                        <!--<td><%#= humanized_money_with_symbol in_parcel.value %></td>-->
+                                        <!--<td><%#= in_parcel.parcel_number %></td>-->
+                                        <td><%= l(in_parcel.invoice_due_date) %></td>
+                                        <td><%= l(in_parcel.due_date) %></td>
+                                        <td>
+                                            <% if in_parcel.paid_day.present? && in_parcel.status == "Pago" %>
+                                                <%= l(in_parcel.paid_day) %>
+                                            <% elsif %>
+                                                <i>Não foi pago</i>
+                                            <% end %>
+                                        </td>
+                                        <td>
+                                            <% if in_parcel.status == "Em atraso" %>
+                                                <font color="red"><%= in_parcel.status %></font>
+                                            <% else %>
+                                                <%= in_parcel.status %>
+                                            <% end %>
+                                        </td>
+                                        <td width="12%">
+                                            <%# project_status change %>
+                                            <% if in_parcel.status == "A pagar" %>
+                                                <% @change_button_description = "Status: Pago" %>
+                                            <% elsif in_parcel.status == "Pago" %>
+                                                <% @change_button_description = "Status: Em atraso" %>
+                                            <% elsif in_parcel.status == "Em atraso" %>
+                                                <% @change_button_description = "Status: A pagar" %>
+                                            <% end %>
+                                            <%# action buttons %>
+                                            <%= link_to app_in_payment_in_parcel_change_status_path(in_parcel.in_payment.id, in_parcel.id, :status => in_parcel.status), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                                <i class="fas fa-fw fa-check"></i>
+                                            <% end %>
+                                            <%= link_to edit_app_in_payment_in_parcel_path(in_parcel.in_payment.id, in_parcel.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                                <i class="fas fa-fw fa-edit"></i>
+                                            <% end %>
+                                            <%#= link_to app_project_path(project.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir o projeto #{project.name} e suas respectivas tarefas?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                                <!-- <i class="fas fa-fw fa-trash"></i> -->
+                                            <%# end %>
+                                        </td>
+                                    <%# end %>
+                                </tr>
+                            <% end %>
                         <% end %>
                     </tbody>
                 </table>

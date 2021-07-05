@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # namespace :app do
+  #   get 'dashboard_reports/index'
+  # end
   #jobs
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
@@ -30,6 +33,11 @@ Rails.application.routes.draw do
     end
     resources :project_storages
     resources :goals
+    resources :dashboard_reports, only: [:index]
+    match '/dashboard_reports/print_in_payment_report', to: 'dashboard_reports#print_in_payment_report', via: 'post'
+    # get '/dashboard_reports/print_in_payment_report', to: 'dashboard_reports#print_in_payment_report'
+    get 'dashboard/filter_dashboard_report_projects_by_company', to: 'dashboard#filter_dashboard_report_projects_by_company'
+    resources :users
   end
   
   #default site routes

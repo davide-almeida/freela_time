@@ -1,0 +1,13 @@
+$('select#dashboard_report_project_id').html('<%= j options_from_collection_for_select(@filtered_projects, :id, :name) %>');
+
+<% if @filtered_projects.present? %>
+    $('#dashboard_report_project_id').append($("<option disabled selected hidden></option>").attr("value","").text('Selecione o projeto'));
+    $('#dashboard_report_task_id')
+        .find('option')
+        .remove()
+        .end()
+    ;
+    $('#dashboard_report_task_id').append($("<option disabled selected hidden></option>").attr("value","").text('Você deve selecionar um projeto'));
+<% else %>
+    $('#dashboard_report_project_id').append($("<option disabled selected hidden></option>").attr("value","").text('Não há projetos nesta empresa'));
+<% end %>

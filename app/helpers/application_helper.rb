@@ -55,4 +55,47 @@ module ApplicationHelper
         options_for_select(RECURRENCE, selected)
     end
     
+    # select goal_type on goal page (CRUD)
+    GOAL_TYPE = [
+        ["Receita", "Receita"]
+    ]
+    def options_for_goal_type(selected)
+        options_for_select(GOAL_TYPE, selected)
+    end
+
+    #Calc percent
+    def calc_percent(v1, v2)
+        #v1 = equivale a 100%
+        #v2 = equivale a X
+        (v1*100)/v2.to_f
+        #result = (v1*100)/v2.to_f
+        #result = result.to_s(:rounded, precision: 2, round_mode: :up)
+    end
+
+    # Metas (goal_in_payments)
+    def calc_goal_percent(goal_type, goal_value, start_date, end_date)
+        if goal_type == "Receita"
+            @in_payments = current_user.in_payments.joins(:in_parcels).where("status = ?", 1).where("in_parcels.paid_day BETWEEN ? AND ?", start_date.to_date, end_date.to_date)
+            
+            @in_parcel_sum = 0
+            @in_payments.each do |in_payment|
+                in_payment.in_parcels.each do |in_parcel|
+                    @in_parcel_sum = @in_parcel_sum + in_parcel.value_cents
+                end
+            end
+            
+            # raise
+        end
+    end
+
+    # Convert string_time to array and convert this to value (work_hour) - I use this in dashboard_report
+    def convert_string_time_to_value_cents(string_time, value_hour)
+        work_hour_array = string_time.split(":")
+        @hour = work_hour_array[0].to_i
+        @minute = work_hour_array[1].to_i
+        work_hour = (@hour * 60 + @minute) / 60.to_f * value_hour
+    end
+
+    
+    
 end

@@ -2,16 +2,20 @@ class App::ProjectsController < AppController
   before_action :set_projects_params, only: [:edit, :update, :destroy]
 
   def index
-    if params[:completed_projects].nil?
+    if params[:completed_projects] != "true"
       @projects = current_user.projects.where.not(status: 2)
       @link_projects = app_projects_path(:completed_projects => true)
       @link_projects_button = "Projetos concluídos"
       @projects_page_title = "Projetos pendentes"
+      @fa_icon = "fas fa-check"
+      @button_class = "btn-primary"
     else
       @projects = current_user.projects.where(status: 2)
       @link_projects = app_projects_path
       @link_projects_button = "Projetos pendentes"
       @projects_page_title = "Projetos concluídos"
+      @fa_icon = "fa fa-list-ul"
+      @button_class = "btn-success"
     end
   end
 
@@ -56,7 +60,7 @@ class App::ProjectsController < AppController
               if @project.by_hour.recurrence == "Mensal"
                 invoice_due_date = start_invoice_day.beginning_of_day + 1.month
                 #invoice_due_date = Time.zone.now + 10.seconds #Para testes
-                App::NewInpaymentWorker.perform_at(invoice_due_date, @project.id)
+                # App::NewInpaymentWorker.perform_at(invoice_due_date, @project.id) #Remover posteriormente, pq os pagamentos serão gerados ao cadastrar uma task_schedule
               end
             else
               render :new

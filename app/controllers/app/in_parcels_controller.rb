@@ -8,6 +8,16 @@ class App::InParcelsController < AppController
   end
 
   def edit
+    options_for_select
+    # raise
+  end
+
+  def update
+    if @in_parcel.update(params_in_parcel)
+      redirect_to app_in_payments_path, notice: "A parcela foi editada com sucesso!"
+    else
+      render :edit
+    end
   end
 
   def change_status
@@ -26,20 +36,18 @@ class App::InParcelsController < AppController
   end
 
   private
-    # def options_for_select
-    #   @company_options_for_select = current_user.companies
-    #   @status_options_for_select = ["A fazer", "Em desenvolvimento", "Concluído"]
-    #   @payment_type_options_for_select = [ "Por hora", "Por projeto" ]
-    #   @recurrence_options_for_select_options_for_select = [ "Apenas uma vez", "Semanal", "Quinzenal", "Mensal" ]
-    # end
+    def options_for_select
+      # @company_options_for_select = current_user.companies
+      @status_options_for_select = [ "A pagar", "Pago", "Em atraso" ]
+    end
 
     def set_in_parcels_params
       @in_parcel = InParcel.find(params[:id])
     end
 
-    def params_project
+    def params_in_parcel
       params.require(:in_parcel).permit(
-        :due_date, :parcel_number, :status, :value, :in_payment_id,
+        :due_date, :parcel_number, :status, :value, :invoice_due_date, :paid_day, :in_payment_id,
       )
     end
 

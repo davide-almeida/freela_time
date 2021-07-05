@@ -4,7 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.3'
+# gem 'rails', '~> 6.1.3'
+gem 'rails', '~> 6.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -44,6 +45,13 @@ gem 'redis'
 gem 'sidekiq'
 # https://github.com/ondrejbartas/sidekiq-cron
 gem "sidekiq-cron", "~> 1.1"
+# https://github.com/ankane/groupdate - group better
+gem 'groupdate'
+# https://github.com/mileszs/wicked_pdf - pdf generator
+# gem 'wicked_pdf'
+# gem 'wkhtmltopdf-binary'
+# https://github.com/abhidsm/time_diff - Ex.: Time.diff(DateTime.now, DateTime.now + 1.hour + 1.day, '%h:%m:%s')[:diff]
+gem 'time_diff'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
