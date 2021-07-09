@@ -26,6 +26,7 @@ class App::ProjectsController < AppController
 
     @project.build_by_hour #has_one
     # @project.by_hours.build #has_many
+    @project.build_by_project #has_one
   end
 
   def create
@@ -40,7 +41,7 @@ class App::ProjectsController < AppController
 
     # raise
 
-    if @project.payment_type = "Por hora"
+    if @project.payment_type == "Por hora"
       # if @project.by_hour.recurrence = "Apenas uma vez"
 
         if @project.save
@@ -136,7 +137,8 @@ class App::ProjectsController < AppController
     def params_project
       params.require(:project).permit(
         :name, :description, :status, :hour_price, :payment_type, :company_id,
-        by_hour_attributes:[:start_pay_day, :start_invoice_day, :hour_price, :recurrence, :_destroy, :id]
+        by_hour_attributes:[:start_pay_day, :start_invoice_day, :hour_price, :recurrence, :_destroy, :id],
+        by_project_attributes:[:payment_type, :total_value, :total_parcel, :recurrence, :start_invoice_day, :start_pay_day, :_destroy, :id]
       )
     end
     

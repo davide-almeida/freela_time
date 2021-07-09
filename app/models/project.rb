@@ -3,10 +3,12 @@ class Project < ApplicationRecord
   belongs_to :user
 
   has_one :by_hour, dependent: :destroy
+  has_one :by_project, dependent: :destroy
   has_many :tasks, dependent: :destroy
   has_many :in_payments, dependent: :destroy
   has_many :project_storages, dependent: :destroy
   accepts_nested_attributes_for :by_hour, allow_destroy: true
+  accepts_nested_attributes_for :by_project, allow_destroy: true
   accepts_nested_attributes_for :tasks, allow_destroy: true
   accepts_nested_attributes_for :in_payments, allow_destroy: true
   accepts_nested_attributes_for :project_storages, allow_destroy: true

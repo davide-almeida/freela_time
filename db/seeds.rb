@@ -72,8 +72,8 @@ puts "Cadastrando ByHours..."
 ByHour.create!(
     hour_price_cents: 1000,
     recurrence: 3,
-    start_pay_day: "2021-08-05", #Time.zone.now.to_date + 1.month,
-    start_invoice_day: "2021-08-01", #Time.zone.now.to_date + 1.month - 4.days,
+    start_pay_day: "2021-07-05", #Time.zone.now.to_date + 1.month,
+    start_invoice_day: "2021-07-01", #Time.zone.now.to_date + 1.month - 4.days,
     project_id: 1
 )
 puts "ByHours cadastradas!"
@@ -81,6 +81,7 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando InPayments..."
+InPayment.create!(project_id: 1, user_id: 1)
 InPayment.create!(project_id: 1, user_id: 1)
 # InPayment.create!(project_id: 1, user_id: 1)
 # InPayment.create!(project_id: 1, user_id: 1)
@@ -91,8 +92,8 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando InParcels..."
-InParcel.create!(in_payment_id: 1, value_cents: 0, status: 1, parcel_number: 1, due_date: "2021-08-05", invoice_due_date: "2021-08-01", paid_day: nil)
-#InParcel.create!(in_payment_id: 1, value_cents: 500, status: 0, parcel_number: 2, due_date: "2021-03-06", invoice_due_date: "2021-03-02", paid_day: nil)
+InParcel.create!(in_payment_id: 1, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-08-05", invoice_due_date: "2021-08-01", paid_day: nil)
+InParcel.create!(in_payment_id: 2, value_cents: 0, status: 0, parcel_number: 2, due_date: "2021-07-05", invoice_due_date: "2021-07-01", paid_day: nil)
 # InParcel.create!(in_payment_id: 2, value_cents: 1000, status: 1, parcel_number: 1, due_date: "2021-04-05", invoice_due_date: "2021-04-01", paid_day: "2021-04-05")
 # InParcel.create!(in_payment_id: 3, value_cents: 3000, status: 1, parcel_number: 1, due_date: "2021-05-05", invoice_due_date: "2021-05-01", paid_day: "2021-05-05")
 # InParcel.create!(in_payment_id: 4, value_cents: 2000, status: 1, parcel_number: 1, due_date: "2021-06-05", invoice_due_date: "2021-06-01", paid_day: "2021-06-05")
