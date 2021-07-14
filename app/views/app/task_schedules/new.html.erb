@@ -82,7 +82,7 @@
                                     <%= link_to edit_app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir este horário?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir este horário de trabalho e seu respectivo pagamento?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

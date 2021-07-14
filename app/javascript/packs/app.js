@@ -111,13 +111,31 @@ $(document).on('turbolinks:load', function() {
                 delimiters: [':'],
             });
         }
+
+        // if ($('.total_parcel').length) {
+        //     new Cleave('.total_parcel', {
+        //         numericOnly: true,
+        //         blocks: [2],
+        //         numeralPositiveOnly: true
+        //     });
+        // }
     // });
     
     // money mask - https://igorescobar.github.io/jQuery-Mask-Plugin/
     if ($('.real').length) {
-        // console.log("Entrou na class real")
         $('.real').mask('#.##0,00', {reverse: true});
     }
+
+    if ($('.total_parcel').length) {
+        $('.total_parcel').mask('Z0', {
+            translation: {
+                'Z': {
+                  pattern: /[1-9]/ //, optional: true
+                }
+              }
+        });
+    }
+    
 
     // Hide and Show payment_type on Projects CRUD
     if ($('select#project_payment_type').length) {
@@ -145,6 +163,9 @@ $(document).on('turbolinks:load', function() {
                 // $('.byProject').hide();
                 $(".byHour").removeClass('hidden')
                 $(".byProject").addClass('hidden')
+                //show or hidden inputs by_hour 
+                $('input.byHour_input').prop('required',true);
+                $('input.byProject_input').prop('required',false);
             }
 
             function byProject() {
@@ -152,6 +173,9 @@ $(document).on('turbolinks:load', function() {
                 // $('.byProject').hide();
                 $(".byHour").addClass('hidden')
                 $(".byProject").removeClass('hidden')
+                //show or hidden inputs by_project
+                $('input.byHour_input').prop('required',false);
+                $('input.byProject_input').prop('required',true);
             }
             
         });

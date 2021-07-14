@@ -28,11 +28,11 @@ class App::TaskSchedulesController < AppController
     old_task_schedule_end_date = @task_schedule.end_date
 
     if @task_schedule.update(params_task_schedule)
-      if @task_schedule.task.project.payment_type == 0 #if payment_type == "Por hora"
+      if @task_schedule.task.project.payment_type == "Por hora" #if payment_type == "Por hora"
         update_in_payment(@task_schedule.id, old_string_time, old_task_schedule_start_date, old_task_schedule_end_date) #Concern Scheduling
-      elsif @task_schedule.task.project.payment_type == 1 #if payment_type == "Por projeto"
+      elsif @task_schedule.task.project.payment_type == "Por projeto" #if payment_type == "Por projeto"
       end
-      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "O horário foi editado com sucesso!"
+      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "O horário de trabalho e seu respectivo pagamento foi editado com sucesso!"
     else
       render :edit
     end
@@ -48,11 +48,11 @@ class App::TaskSchedulesController < AppController
     @task_schedule = TaskSchedule.new(params_task_schedule)
     @task_schedule.task_id = params['task_id']
     if @task_schedule.save
-      if @task_schedule.task.project.payment_type == 0 #if payment_type == "Por hora"
+      if @task_schedule.task.project.payment_type == "Por hora" #if payment_type == "Por hora"
         save_in_payment(@task_schedule.id) #Concern Scheduling
-      elsif @task_schedule.task.project.payment_type == 1 #if payment_type == "Por projeto"
+      elsif @task_schedule.task.project.payment_type == "Por projeto" #if payment_type == "Por projeto"
       end
-      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "Um novo horário foi cadastrado na tarefa #{@task_schedule.task.name}!"
+      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "Um novo horário de trabalho foi cadastrado na tarefa #{@task_schedule.task.name}!"
     else
       render :new
     end
@@ -69,7 +69,7 @@ class App::TaskSchedulesController < AppController
         destroy_in_payment(params[:task_id], @task_schedule_start_date, @task_schedule_end_date, task_schedule_string_time) #Concern Scheduling
       elsif project_payment_type == "Por projeto"
       end
-      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "O horário foi excluído com sucesso!"
+      redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "O horário de trabalho e seu respectivo pagamento foi excluído com sucesso!"
     else
       render :new
     end

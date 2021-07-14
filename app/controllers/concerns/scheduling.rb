@@ -197,16 +197,17 @@ module Scheduling
     # (DESTROY)Remove in_payment - END
 
     # (DESTROY)Remove in_payment from task_page - START
-        def destroy_in_payment_from_task(task_string_time, task_id)
-            @task = current_user.tasks.find(task_id)
-            if @task.project.by_hour != nil
-                hour_price = @task.project.by_hour.hour_price_cents
-                convert_string_time_to_value_cents_concern(task_string_time, hour_price)
-            end
-
-            @in_payments = @task.project.in_payments.joins(:in_parcels)
-
+    def destroy_in_payment_from_task(task_schedules_ids, task_id)
+        @task = Task.find(task_id)
+        @task_schedules = TaskSchedule.find(task_schedules_ids)
+        @task_schedules.each do |task_schedule|
+            @task_schedule = task_schedule
+            task_schedule_start_date = @task_schedule.start_date
+            task_schedule_end_date = @task_schedule.end_date
+            task_schedule_string_time = @task_schedule.work_hour
+            destroy_in_payment(task_id, task_schedule_start_date, task_schedule_end_date, task_schedule_string_time)
         end
+    end
     # (DESTROY)Remove in_payment from task_page - END
 
     private

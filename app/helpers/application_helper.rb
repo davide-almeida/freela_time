@@ -63,6 +63,15 @@ module ApplicationHelper
         options_for_select(GOAL_TYPE, selected)
     end
 
+    # select PAYMENT_TYPE_PER_PROJECT on project page (CRUD)
+    PAYMENT_TYPE_PER_PROJECT = [
+        ["A vista", "A vista"],
+        ["Parcelado", "Parcelado"],
+    ]
+    def options_for_payment_type_per_project(selected)
+        options_for_select(PAYMENT_TYPE_PER_PROJECT, selected)
+    end
+
     #Calc percent
     def calc_percent(v1, v2)
         #v1 = equivale a 100%

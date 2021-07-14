@@ -36,7 +36,7 @@ class App::CompaniesController < AppController
   def destroy
     company_name = @company.name
     if @company.destroy
-      redirect_to app_companies_path, notice: "A empresa #{company_name}, seus respectivos projetos e tarefas foram excluídos com sucesso!"
+      redirect_to app_companies_path, notice: "A empresa #{company_name}, seus respectivos projetos, pagamentos, tarefas e horas de trabalho foram excluídas com sucesso!"
     else
       render :new
     end

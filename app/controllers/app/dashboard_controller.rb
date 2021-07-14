@@ -172,7 +172,10 @@ class App::DashboardController < AppController
   def create
     @task_schedule = TaskSchedule.new(params_dashboard.except(:company_id, :project_id))
     if @task_schedule.save
-      save_in_payment(@task_schedule.id) #Concern Scheduling
+      if @task_schedule.task.project.payment_type == "Por hora"
+        save_in_payment(@task_schedule.id) #Concern Scheduling
+      elsif @task_schedule.task.project.payment_type == "Por projeto" #if payment_type == "Por projeto"
+      end
       redirect_to app_dashboard_path, notice: "Um novo horário foi cadastrado na tarefa #{@task_schedule.task.name}!"
     else
       redirect_to app_dashboard_path, alert: @task_schedule.errors.messages.values[1].join(", ").html_safe

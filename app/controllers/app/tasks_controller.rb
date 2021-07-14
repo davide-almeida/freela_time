@@ -53,10 +53,18 @@ class App::TasksController < AppController
 
   def destroy
     task_name = @task.name
+    # A partir do task_id, percorrer cada task_schedule pertencente a ela e usar o método destroy_in_payment
     task_id = @task.id
+    project_payment_type = @task.project.payment_type
+    task_schedules_ids = @task.task_schedules.ids
     task_string_time = params[:task_total_work_time]
-    raise
-    destroy_in_payment_from_task(task_string_time, task_id)
+    
+    if task_string_time != "00:00:00"
+      if project_payment_type == "Por hora"
+        destroy_in_payment_from_task(task_schedules_ids, task_id)
+      elsif project_payment_type == "Por projeto"
+      end
+    end
 
     if @task.destroy
       redirect_to app_tasks_path, notice: "A tarefa #{task_name} foi excluida com sucesso!"

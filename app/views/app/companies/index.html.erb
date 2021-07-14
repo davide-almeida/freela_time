@@ -82,7 +82,7 @@
                                     <%= link_to edit_app_company_path(company.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_company_path(company.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir a empresa #{company.name}, seus respectivos projetos e empresas?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_company_path(company.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir a empresa #{company.name}, seus respectivos projetos, tarefas, horas de trabalho e pagamentos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

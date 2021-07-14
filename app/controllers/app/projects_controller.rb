@@ -76,6 +76,8 @@ class App::ProjectsController < AppController
         end
 
       # end
+    elsif @project.payment_type == "Por projeto"
+      raise
     end
 
   end
@@ -95,7 +97,7 @@ class App::ProjectsController < AppController
   def destroy
     project_name = @project.name
     if @project.destroy
-      redirect_to app_projects_path, notice: "O projeto #{project_name} e suas respectivas tarefas foram excluídas com sucesso!"
+      redirect_to app_projects_path, notice: "O projeto #{project_name} seus respectivos pagamentos, tarefas e horas de trabalho foram excluídas com sucesso!"
     else
       render :index
     end
