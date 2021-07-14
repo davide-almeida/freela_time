@@ -239,11 +239,13 @@ module Scheduling
         def recurrence_identify(recurrence)
             if recurrence == "Mensal"
                 @recurrence = 1.month
-            elsif recurrence = "Quinzenal"
+            elsif recurrence == "Quinzenal"
                 @recurrence = 15.days
-            elsif recurrence = "Diário"
+            elsif recurrence == "Semanal"
+                @recurrence = 1.week
+            elsif recurrence == "Diário"
                 @recurrence = 1.day
-            else
+            elsif recurrence == "Apenas uma vez"
                 @recurrence = 0.day
             end
         end

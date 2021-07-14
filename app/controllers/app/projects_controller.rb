@@ -1,5 +1,6 @@
 class App::ProjectsController < AppController
   before_action :set_projects_params, only: [:edit, :update, :destroy]
+  include Scheduling
 
   def index
     if params[:completed_projects] != "true"
@@ -39,45 +40,49 @@ class App::ProjectsController < AppController
     @project.user_id = current_user.id
     @project.status = 0
 
-    # raise
+    if @project.save
+      @in_payment = InPayment.new(project_id: @project.id, user_id: @project.user_id)
+      @in_payment.save
 
-    if @project.payment_type == "Por hora"
-      # if @project.by_hour.recurrence = "Apenas uma vez"
+      if @in_payment.save
+        start_pay_day = @project.by_hour.start_pay_day
+        start_invoice_day = @project.by_hour.start_invoice_day
+        
+        if @project.payment_type == "Por hora"
+          @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
+          @in_parcel.save
+        elsif @project.payment_type == "Por projeto"
+          recurrence_identify(@project.by_project.recurrence)
+          number_parcels = @project.by_project.total_parcel
+          total_value = @project.by_project.total_value
+          each_parcel_value = total_value/number_parcels
 
-        if @project.save
-          @in_payment = InPayment.new(project_id: @project.id, user_id: @project.user_id)
-          @in_payment.save
-          # puts "Salvou o project"
-
-          if @in_payment.save
-            start_pay_day = @project.by_hour.start_pay_day
-            start_invoice_day = @project.by_hour.start_invoice_day
-            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
+          number_parcels.times do |number|
+            number += 1
+            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: each_parcel_value, status: 0, parcel_number: number, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
             @in_parcel.save
-
-            if @in_parcel.save
-              redirect_to app_projects_path, notice: "O projeto #{@project.name} e seu respectivo pagamento foram cadastrados com sucesso!"
-              
-              if @project.by_hour.recurrence == "Mensal"
-                invoice_due_date = start_invoice_day.beginning_of_day + 1.month
-                #invoice_due_date = Time.zone.now + 10.seconds #Para testes
-                # App::NewInpaymentWorker.perform_at(invoice_due_date, @project.id) #Remover posteriormente, pq os pagamentos serão gerados ao cadastrar uma task_schedule
-              end
-            else
-              render :new
-            end
-
-          else
-            render :new
           end
 
+        end
+
+        if @in_parcel.save
+          redirect_to app_projects_path, notice: "O projeto #{@project.name} e seu respectivo pagamento foram cadastrados com sucesso!"
+          
+          # if @project.by_hour.recurrence == "Mensal"
+            # invoice_due_date = start_invoice_day.beginning_of_day + 1.month
+            #invoice_due_date = Time.zone.now + 10.seconds #Para testes
+            # App::NewInpaymentWorker.perform_at(invoice_due_date, @project.id) #Remover posteriormente, pq os pagamentos serão gerados ao cadastrar uma task_schedule
+          # end
         else
           render :new
         end
 
-      # end
-    elsif @project.payment_type == "Por projeto"
-      raise
+      else
+        render :new
+      end
+
+    else
+      render :new
     end
 
   end
