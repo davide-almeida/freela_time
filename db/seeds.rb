@@ -93,7 +93,7 @@ puts "-----------------------"
 puts "-----------------------"
 puts "Cadastrando InParcels..."
 InParcel.create!(in_payment_id: 1, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-08-05", invoice_due_date: "2021-08-01", paid_day: nil)
-InParcel.create!(in_payment_id: 2, value_cents: 0, status: 0, parcel_number: 2, due_date: "2021-07-05", invoice_due_date: "2021-07-01", paid_day: nil)
+InParcel.create!(in_payment_id: 2, value_cents: 0, status: 0, parcel_number: 1, due_date: "2021-07-05", invoice_due_date: "2021-07-01", paid_day: nil)
 # InParcel.create!(in_payment_id: 2, value_cents: 1000, status: 1, parcel_number: 1, due_date: "2021-04-05", invoice_due_date: "2021-04-01", paid_day: "2021-04-05")
 # InParcel.create!(in_payment_id: 3, value_cents: 3000, status: 1, parcel_number: 1, due_date: "2021-05-05", invoice_due_date: "2021-05-01", paid_day: "2021-05-05")
 # InParcel.create!(in_payment_id: 4, value_cents: 2000, status: 1, parcel_number: 1, due_date: "2021-06-05", invoice_due_date: "2021-06-01", paid_day: "2021-06-05")

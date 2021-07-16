@@ -65,7 +65,7 @@ module ApplicationHelper
 
     # select PAYMENT_TYPE_PER_PROJECT on project page (CRUD)
     PAYMENT_TYPE_PER_PROJECT = [
-        ["A vista", "A vista"],
+        ["À vista", "À vista"],
         ["Parcelado", "Parcelado"],
     ]
     def options_for_payment_type_per_project(selected)

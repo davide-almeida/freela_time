@@ -61,11 +61,11 @@
                             <th>Empresa</th>
                             <th>Projeto</th>
                             <th>Descrição</th>
-                            <th>valor</th>
                             <th>Tipo pagamento</th>
-                            <th>Data fechamento</th>
-                            <th>Data pagamento</th>
-                            <th>Quant. de tarefas</th>
+                            <th>Valor</th>
+                            <!-- <th>Data fechamento</th> -->
+                            <!-- <th>Data pagamento</th> -->
+                            <th>Tarefas</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -82,16 +82,18 @@
                                         <%= project.description %>
                                     <% end %>
                                 </td>
-                                <td><%#= project.pay_day.strftime('%d/%m/%Y') %>
-                                    <% if project.by_hour.nil? %>
-                                        "Não existe"
-                                    <% else %>
-                                        <%= humanized_money_with_symbol project.by_hour.hour_price %>
-                                    <% end %>
-                                </td>
                                 <td><%= project.payment_type %></td>
-                                <td><%= l(project.by_hour.start_invoice_day) %></td>
-                                <td><%= l(project.by_hour.start_pay_day) %></td>
+
+                                <% if project.by_project.nil? %>
+                                    <td><%= humanized_money_with_symbol project.by_hour.hour_price %></td>
+                                    <!-- <td><%#= l(project.by_hour.start_invoice_day) %></td> -->
+                                     <!-- <td><%#= l(project.by_hour.start_pay_day) %></td> -->
+                                <% elsif project.by_hour.nil? %>
+                                    <td><%= humanized_money_with_symbol project.by_project.total_value %></td>
+                                    <!-- <td><%#= l(project.by_project.start_invoice_day) %></td> -->
+                                    <!-- <td><%#= l(project.by_project.start_pay_day) %></td> -->
+                                <% end %>
+
                                 <td>
                                     <% task_count = project.tasks.count %>
                                     <% if task_count > 0 %>

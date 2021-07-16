@@ -136,8 +136,8 @@
                         <tr>
                             <th>Projeto</th>
                             <th>Valor</th>
-                            <!--<th>Valor parcela</th> -->
-                            <!--<th>Parcelas</th> -->
+                            <th>Valor parcela</th>
+                            <th>Parcelas</th>
                             <th>Fechamento</th>
                             <th>Vencimento</th>
                             <th>Data pago</th>
@@ -152,8 +152,8 @@
                                     <td><%= in_payment.project.name %></td>
                                     <td><%= humanized_money_with_symbol in_payment.in_parcels.sum(:value_cents)/100.to_f %></td>
                                     <%# in_payment.in_parcels.each do |in_parcel| %>
-                                        <!--<td><%#= humanized_money_with_symbol in_parcel.value %></td>-->
-                                        <!--<td><%#= in_parcel.parcel_number %></td>-->
+                                        <td><%= humanized_money_with_symbol in_parcel.value %></td>
+                                        <td><%= in_parcel.parcel_number %> de <%= in_payment.in_parcels.count %></td>
                                         <td><%= l(in_parcel.invoice_due_date) %></td>
                                         <td><%= l(in_parcel.due_date) %></td>
                                         <td>

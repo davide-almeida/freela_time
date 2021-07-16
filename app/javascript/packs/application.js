@@ -29,3 +29,4 @@ import './app/datatables/customDataTable.js';
 
 // notify
 window.Toastify = Toastify
+

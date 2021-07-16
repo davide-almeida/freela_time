@@ -18,6 +18,7 @@ class App::ProjectsController < AppController
       @fa_icon = "fa fa-list-ul"
       @button_class = "btn-success"
     end
+
   end
 
   def new
@@ -39,28 +40,49 @@ class App::ProjectsController < AppController
     @project = Project.new(params_project)
     @project.user_id = current_user.id
     @project.status = 0
+    raise
+    
+    if @project.payment_type == "Por hora"
+      @project.by_project = nil
+    elsif @project.payment_type == "Por projeto"
+      @project.by_hour = nil
+    end
 
     if @project.save
       @in_payment = InPayment.new(project_id: @project.id, user_id: @project.user_id)
       @in_payment.save
 
-      if @in_payment.save
-        start_pay_day = @project.by_hour.start_pay_day
-        start_invoice_day = @project.by_hour.start_invoice_day
-        
+      if @in_payment.save     
         if @project.payment_type == "Por hora"
+          start_pay_day = @project.by_hour.start_pay_day
+          start_invoice_day = @project.by_hour.start_invoice_day
+
           @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
           @in_parcel.save
         elsif @project.payment_type == "Por projeto"
-          recurrence_identify(@project.by_project.recurrence)
-          number_parcels = @project.by_project.total_parcel
-          total_value = @project.by_project.total_value
-          each_parcel_value = total_value/number_parcels
+          start_pay_day = @project.by_project.start_pay_day
+          start_invoice_day = @project.by_project.start_invoice_day
 
-          number_parcels.times do |number|
-            number += 1
-            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: each_parcel_value, status: 0, parcel_number: number, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
+          if @project.by_project.payment_type == "À vista"
+            @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: 0, status: 0, parcel_number: 1, due_date: start_pay_day, invoice_due_date: start_invoice_day, paid_day: nil)
             @in_parcel.save
+
+          elsif @project.by_project.payment_type == "Parcelado"
+            number_parcels = @project.by_project.total_parcel
+            total_value = @project.by_project.total_value_cents
+            each_parcel_value = total_value/number_parcels
+
+            recurrence_identify(@project.by_project.recurrence)
+            new_start_pay_day = start_pay_day
+            new_start_invoice_day = start_invoice_day
+
+            number_parcels.times do |number|
+              number += 1
+              @in_parcel = InParcel.new(in_payment_id: @in_payment.id, value_cents: each_parcel_value, status: 0, parcel_number: number, due_date: new_start_pay_day, invoice_due_date: new_start_invoice_day, paid_day: nil)
+              @in_parcel.save
+              new_start_pay_day += @recurrence
+              new_start_invoice_day += @recurrence
+            end
           end
 
         end

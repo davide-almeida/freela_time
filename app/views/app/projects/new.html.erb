@@ -49,11 +49,12 @@
                                     </div>
                                     <div class="byHour form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Data Fechamento Período</label>
-                                        <%= byHour.date_field :start_invoice_day, class:"form-control datepicker byHour_input", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                        <%= byHour.date_field :start_invoice_day, class:"form-control datepicker byHour_input invoice_date_field", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                        <div class="byHour invoice-date-error"></div>
                                     </div>
                                     <div class="byHour form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Data pagamento</label>
-                                        <%= byHour.date_field :start_pay_day, class:"form-control datepicker byHour_input", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                        <%= byHour.date_field :start_pay_day, class:"form-control datepicker byHour_input due_date_field", placeholder:"Ex.: 10/03/2021", required:"required" %>
                                     </div>
                                 <% end %>
 
@@ -64,11 +65,11 @@
                                     </div>
                                     <div class="byProject form-group col-md-6 col-lg-6 col-xs-12">
                                         <label>Valor total</label>
-                                        <%= byProject.text_field :total_value, class:"form-control real byProject_input", placeholder:"Valor total do projeto. Ex.: 30,50", required:"required" %>
+                                        <%= byProject.text_field :total_value, class:"form-control real byProject_input", placeholder:"Valor total do projeto. Ex.: 30,50" %>
                                     </div>
                                     <div class="byProject form-group col-md-6 col-lg-6 col-xs-12">
                                         <label>Número de parcelas</label>
-                                        <%= byProject.number_field :total_parcel, class:"form-control total_parcel byProject_input", min:"1", max:"99", maxlength:"2", placeholder:"Número de parcelas. Ex.: 3", required:"required" %>
+                                        <%= byProject.number_field :total_parcel, class:"form-control total_parcel byProject_input", min:"1", max:"99", maxlength:"2", placeholder:"Número de parcelas. Ex.: 3" %>
                                     </div>
                                     <div class="byProject form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Recorrência do pagamento</label>
@@ -76,11 +77,12 @@
                                     </div>
                                     <div class="byProject form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Data Fechamento Período</label>
-                                        <%= byProject.date_field :start_invoice_day, class:"form-control datepicker byProject_input", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                        <%= byProject.date_field :start_invoice_day, class:"form-control datepicker byProject_input invoice_date_field", placeholder:"Ex.: 10/03/2021" %>
+                                        <div class="byProject invoice-date-error"></div>
                                     </div>
                                     <div class="byProject form-group col-md-4 col-lg-4 col-xs-12">
                                         <label>Data pagamento</label>
-                                        <%= byProject.date_field :start_pay_day, class:"form-control datepicker byProject_input", placeholder:"Ex.: 10/03/2021", required:"required" %>
+                                        <%= byProject.date_field :start_pay_day, class:"form-control datepicker byProject_input due_date_field", placeholder:"Ex.: 10/03/2021" %>
                                     </div>
                                 <% end %>
 
@@ -105,7 +107,7 @@
                                     <%= f.text_area :description, class:"form-control", placeholder:"Você pode escrever aqui uma breve descrição do projeto." %>
                                 </div>
                                 <div class="form-group col-lg-12 col-xs-12">
-                                    <%= f.submit "Cadastrar", class:"btn btn-primary", data: { disable_with: "Aguarde..." } %>
+                                    <%= f.submit "Cadastrar", class:"btn btn-primary" %>
                                 </div>
                             </div>
                         <% end %>

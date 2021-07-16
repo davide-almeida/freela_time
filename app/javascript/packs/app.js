@@ -1,4 +1,3 @@
-
 import 'app/jquery/jquery.min.js';
 import 'app/bootstrap/js/bootstrap.bundle.min.js';
 import 'app/jquery-easing/jquery.easing.min.js';
@@ -8,6 +7,11 @@ import '@fortawesome/fontawesome-free/js/all';
 import './app/timer';
 import './app/cleave';
 import 'jquery-mask-plugin'
+
+//validator.js - validations field
+import validator from 'validator';
+// var validator = require('validator');
+
 
 
 // Enable tooltips
@@ -180,21 +184,77 @@ $(document).on('turbolinks:load', function() {
             
         });
     }
-    
-    // dashboard_print_report page
-    // if ($("#printableArea").length) {
-        // const printDiv = document.querySelector('#print-btn');
 
-    //     window.printDiv(divName) = function printDiv(divName) {
-    //         console.log("Entrou na function");
-    //         var printContents = document.getElementById(divName).innerHTML;
-    //         var originalContents = document.body.innerHTML;
-       
-    //         document.body.innerHTML = printContents;
-       
-    //         window.print();
-       
-    //         document.body.innerHTML = originalContents;
-    //    }
-    // }
+    // hide and show selects on project page
+    if ($('select#project_by_project_attributes_payment_type').length) {
+        $('input#project_by_project_attributes_total_parcel').prop('disabled', true).val("1");
+        $('select#project_by_project_attributes_recurrence').prop('disabled', true).val("Apenas uma vez");
+
+        $("select#project_by_project_attributes_payment_type").on("change", function(){
+            if($('select#project_by_project_attributes_payment_type').val() == 'À vista') {
+                $('input#project_by_project_attributes_total_parcel').prop('disabled', true).val("1");
+                $('select#project_by_project_attributes_recurrence').prop('disabled', true).val("Apenas uma vez");
+
+            } else if($('select#project_by_project_attributes_payment_type').val() == 'Parcelado') {
+                $('input#project_by_project_attributes_total_parcel').prop('disabled', false).val("");
+                $('#project_by_project_attributes_recurrence').prop('disabled', false).val("Apenas uma vez");
+            }
+        });
+    }
+
+    // invoice_date_field and due_date_field validations
+    if (($('.invoice_date_field').length) && ($('.due_date_field').length)) {
+        function compareDate(date1,date2){
+            date1 = date1.split("-").reverse().join("-"); //formating 
+            date2 = date2.split("-").reverse().join("-"); //formating 
+            var oneDay = 24 * 60 * 60 * 1000;    
+            var firstDate = new Date(date1);
+            var secondDate = new Date(date2);
+            return (Math.round((secondDate.getTime() - firstDate.getTime()) / (oneDay)) >= 0);
+        }
+
+        // when submit form, add classes error and show div error
+        $("form#new_project").off().on("submit", function(){
+            if ($('select#project_payment_type').val() == 'Por hora') {
+                const invoice_date = $(".byProject_input.invoice_date_field").val()
+                const due_date = $(".byProject_input.due_date_field").val()
+
+                if (compareDate(invoice_date, due_date) == false) {
+                    console.log('Por hora - FALSE !!!!!');
+                    $(".byHour_input.invoice_date_field").addClass("input-error");
+                    $(".byHour_input.due_date_field").addClass("input-error");
+                    $( ".byHour.invoice-date-error" ).show();
+                    $('<p>A data de fechamento do período deve ser igual ou inferior a data de pagamento.</p>').appendTo('.byHour.invoice-date-error');
+                    return false;
+                }
+                
+            } else if ($('select#project_payment_type').val() == 'Por projeto') {
+                const invoice_date = $(".byProject_input.invoice_date_field").val()
+                const due_date = $(".byProject_input.due_date_field").val()
+
+                if (compareDate(invoice_date, due_date) == false) {
+                    console.log('Por projeto - FALSE !!!!!');
+                    $(".byProject_input.invoice_date_field").addClass("input-error");
+                    $(".byProject_input.due_date_field").addClass("input-error");
+                    $( ".byProject.invoice-date-error" ).show();
+                    $('<p>A data de fechamento do período deve ser igual ou inferior a data de pagamento.</p>').appendTo('.byProject.invoice-date-error');
+                    return false;
+                }
+            }  
+        })
+
+        //remove classes and hide div error
+        $("select#project_payment_type").on("change", function() {
+            if ($("select#project_payment_type").val() == 'Por hora') {
+                $(".byProject_input.invoice_date_field").removeClass("input-error");
+                $(".byProject_input.due_date_field").removeClass("input-error");
+                $( ".byProject.invoice-date-error" ).hide();
+            } else if ($('select#project_payment_type').val() == 'Por projeto') {
+                $(".byHour_input.invoice_date_field").removeClass("input-error");
+                $(".byHour_input.due_date_field").removeClass("input-error");
+                $( ".byProject.invoice-date-error" ).show();
+            }
+        });
+    }
+
 });
