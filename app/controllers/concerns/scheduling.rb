@@ -24,7 +24,8 @@ module Scheduling
         task_schedule_start_date = @task_schedule.start_date
         task_schedule_end_date = @task_schedule.end_date
 
-        merge_invoice_date(project_start_invoice_date, task_schedule_start_date, recurrence)
+        find_new_invoice_date(@task_schedule.id)
+        # raise
         # verifica se o start_date e o end_date da task_schedule devem ser cadastradas em faturas diferentes (caso precise)
         if (task_schedule_start_date < @first_invoice_date) && (task_schedule_end_date >= @first_invoice_date)
             # Primeira fatura
@@ -64,6 +65,7 @@ module Scheduling
             end
         else # Caso NÃO seja necessário cadastrar mais de uma fatura separadamente
             @new_parcel_due_date = @first_invoice_date + ((@task_schedule.task.project.by_hour.start_pay_day - @task_schedule.task.project.by_hour.start_invoice_day).to_i).days
+            # raise
             if (@in_parcels == nil) or (@in_parcels.where(:due_date => @new_parcel_due_date).present? == false)
                 # caso seja necessário criar uma nova fatura
                 @new_payment = InPayment.new(user_id: current_user.id, project_id: @task_schedule.task.project.id)
@@ -107,7 +109,7 @@ module Scheduling
 
         # REMOVENDO VALORES
         # Verificando se a old_task_schedule ESTAVA dividida em duas faturas
-        merge_invoice_date(project_start_invoice_date, old_task_schedule_start_date, recurrence)
+        find_new_invoice_date(@task_schedule.id)
         if (old_task_schedule_start_date < @first_invoice_date) && (old_task_schedule_end_date >= @first_invoice_date)
             # Primeira fatura
             @new_parcel_due_date = @first_invoice_date + ((@task_schedule.task.project.by_hour.start_pay_day - @task_schedule.task.project.by_hour.start_invoice_day).to_i).days
@@ -142,8 +144,8 @@ module Scheduling
     end
     # Update in_payment - END
 
-    # (DESTROY)Remove in_payment - START
-    def destroy_in_payment(task_id, task_schedule_start_date, task_schedule_end_date, task_schedule_string_time)
+    # (DESTROY)Remove in_payment - START (obs.: Refatorar este método!!!)
+    def destroy_in_payment(task_id, task_schedule_start_date, task_schedule_end_date, task_schedule_string_time, task_schedule_id)
         @task = Task.find(task_id)
 
         # Definindo variáveis da task_schedule
@@ -165,7 +167,7 @@ module Scheduling
 
         # REMOVENDO VALORES
         # Verificando se a task_schedule ESTAVA dividida em duas faturas
-        merge_invoice_date(project_start_invoice_date, task_schedule_start_date, recurrence)
+        find_new_invoice_date(task_schedule_id)
         if (task_schedule_start_date < @first_invoice_date) && (task_schedule_end_date >= @first_invoice_date)
             # Primeira fatura
             @new_parcel_due_date = @first_invoice_date + ((@task_schedule.task.project.by_hour.start_pay_day - @task_schedule.task.project.by_hour.start_invoice_day).to_i).days
@@ -175,6 +177,7 @@ module Scheduling
             @in_parcel = @in_parcels.find_by_due_date(@new_parcel_due_date)
             parcel_value_cents = @in_parcel.value_cents
             @in_parcel.update(value_cents: parcel_value_cents - @work_time)
+            remove_parcel_and_payment(@in_parcel.id)
 
             # Segunda fatura
             @new_parcel_due_date = @last_invoice_date + ((@task_schedule.task.project.by_hour.start_pay_day - @task_schedule.task.project.by_hour.start_invoice_day).to_i).days
@@ -184,6 +187,7 @@ module Scheduling
             @in_parcel = @in_parcels.find_by_due_date(@new_parcel_due_date)
             parcel_value_cents = @in_parcel.value_cents
             @in_parcel.update(value_cents: parcel_value_cents - @work_time)
+            remove_parcel_and_payment(@in_parcel.id)
 
         else
             # Caso a task_schedule não tenha sido dividida em duas faturas
@@ -191,6 +195,7 @@ module Scheduling
             @in_parcel = @in_parcels.find_by_due_date(@new_parcel_due_date)
             parcel_value_cents = @in_parcel.value_cents
             @in_parcel.update_columns(value_cents: parcel_value_cents - string_time_cents)
+            remove_parcel_and_payment(@in_parcel.id)
         end
         
     end
@@ -226,14 +231,35 @@ module Scheduling
             @work_time = @work_time.to_i
         end
 
-        def merge_invoice_date(project_invoice_date, task_schedule_date, recurrence)
-            project_invoice_day = project_invoice_date.day
-            task_schedule_date = task_schedule_date + 1.month
-            task_schedule_month = task_schedule_date.month
-            task_schedule_year = task_schedule_date.year
-            @first_invoice_date = "#{project_invoice_day}/#{task_schedule_month}/#{task_schedule_year}".to_time.beginning_of_day
-            recurrence_identify(recurrence)
-            @last_invoice_date = "#{project_invoice_day}/#{task_schedule_month}/#{task_schedule_year}".to_time.beginning_of_day + @recurrence
+        def find_new_invoice_date(task_schedule_id)
+            # Project data
+            @task_schedule = TaskSchedule.find(task_schedule_id)
+            invoice_date = @task_schedule.task.project.by_hour.start_invoice_day.beginning_of_day
+            due_date = @task_schedule.task.project.by_hour.start_pay_day.beginning_of_day
+            recurrence_identify(@task_schedule.task.project.by_hour.recurrence)
+            recurrence = @recurrence
+            # TaskSchedule data
+            task_schedule_start_date = @task_schedule.start_date.beginning_of_day
+            task_schedule_end_date = @task_schedule.end_date.beginning_of_day
+            # Algorithm
+            @new_invoice_date = invoice_date
+            while task_schedule_start_date >= @new_invoice_date do
+                @new_invoice_date += recurrence
+            end
+
+            @first_invoice_date = @new_invoice_date
+            @last_invoice_date = @new_invoice_date + recurrence
+        end
+
+        def remove_parcel_and_payment(in_parcel_id)
+            @in_parcel = InParcel.find(in_parcel_id)
+            @in_payment = InPayment.find(@in_parcel.in_payment_id)
+            if @in_parcel.value_cents <= 0
+                @in_parcel.destroy
+            end
+            if @in_payment.in_parcels.count <= 0
+                @in_payment.destroy
+            end
         end
 
         def recurrence_identify(recurrence)

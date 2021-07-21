@@ -193,11 +193,16 @@ $(document).on('turbolinks:load', function() {
         $("select#project_by_project_attributes_payment_type").on("change", function(){
             if($('select#project_by_project_attributes_payment_type').val() == 'À vista') {
                 $('input#project_by_project_attributes_total_parcel').prop('disabled', true).val("1");
+                if ($("#project_by_project_attributes_recurrence").prop("Apenas uma vez", 0).val() != "Apenas uma vez") {
+                    $('#project_by_project_attributes_recurrence').append('<option id="optionAdded" value="Apenas uma vez">Apenas uma vez</option>');
+                    $("#project_by_project_attributes_recurrence").val($("#optionAdded option:first").val());
+                }
                 $('select#project_by_project_attributes_recurrence').prop('disabled', true).val("Apenas uma vez");
 
             } else if($('select#project_by_project_attributes_payment_type').val() == 'Parcelado') {
                 $('input#project_by_project_attributes_total_parcel').prop('disabled', false).val("");
                 $('#project_by_project_attributes_recurrence').prop('disabled', false).val("Apenas uma vez");
+                $("#project_by_project_attributes_recurrence option[value='Apenas uma vez']").remove();
             }
         });
     }
@@ -216,8 +221,8 @@ $(document).on('turbolinks:load', function() {
         // when submit form, add classes error and show div error
         $("form#new_project").off().on("submit", function(){
             if ($('select#project_payment_type').val() == 'Por hora') {
-                const invoice_date = $(".byProject_input.invoice_date_field").val()
-                const due_date = $(".byProject_input.due_date_field").val()
+                const invoice_date = $(".byHour_input.invoice_date_field").val()
+                const due_date = $(".byHour_input.due_date_field").val()
 
                 if (compareDate(invoice_date, due_date) == false) {
                     console.log('Por hora - FALSE !!!!!');

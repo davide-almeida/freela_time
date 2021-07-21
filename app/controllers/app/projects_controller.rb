@@ -40,7 +40,6 @@ class App::ProjectsController < AppController
     @project = Project.new(params_project)
     @project.user_id = current_user.id
     @project.status = 0
-    raise
     
     if @project.payment_type == "Por hora"
       @project.by_project = nil

@@ -64,11 +64,14 @@ class App::TaskSchedulesController < AppController
     @task_schedule_end_date = @task_schedule.end_date
     task_schedule_string_time = @task_schedule.work_hour
     project_payment_type = @task_schedule.task.project.payment_type
+    task_schedule_id = @task_schedule.id
+    
+    if project_payment_type == "Por hora"
+      destroy_in_payment(params[:task_id], @task_schedule_start_date, @task_schedule_end_date, task_schedule_string_time, task_schedule_id) #Concern Scheduling
+    elsif project_payment_type == "Por projeto"
+    end
+
     if @task_schedule.destroy
-      if project_payment_type == "Por hora"
-        destroy_in_payment(params[:task_id], @task_schedule_start_date, @task_schedule_end_date, task_schedule_string_time) #Concern Scheduling
-      elsif project_payment_type == "Por projeto"
-      end
       redirect_to new_app_task_task_schedule_path(params[:task_id]), notice: "O horário de trabalho e seu respectivo pagamento foi excluído com sucesso!"
     else
       render :new
