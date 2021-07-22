@@ -10,6 +10,8 @@ environment.plugins.prepend('Provide',
     jquery: 'jquery',
     // Rails: '@rails/ujs',
     Toastify: 'toastify-js/src/toastify'
+    // moment: 'moment',
+    // momentDurationFormatSetup: 'moment-duration-format'
   })
 )
 

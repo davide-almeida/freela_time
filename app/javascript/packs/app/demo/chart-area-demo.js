@@ -104,6 +104,7 @@ $(document).on('turbolinks:load', function() {
                 // fixedStepSize: 1,
                 maxTicksLimit: 5,
                 padding: 10,
+                min: 0,
                 // Include a dollar sign in the ticks
                 callback: function(value, index, values) {
                   return 'R$' + number_format(value, 2, ',', '.');

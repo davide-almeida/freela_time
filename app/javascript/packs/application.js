@@ -30,3 +30,15 @@ import './app/datatables/customDataTable.js';
 // notify
 window.Toastify = Toastify
 
+// moment.js (added "environment.js")
+var moment = require('moment'); // require
+window.moment = moment
+// global.moment = moment
+moment().format();
+//console.log(moment("20111031", "YYYYMMDD").fromNow());
+
+// module to moment
+var momentDurationFormatSetup = require("moment-duration-format");
+momentDurationFormatSetup(moment);
+
+

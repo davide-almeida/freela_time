@@ -8,6 +8,7 @@ import './app/timer';
 import './app/cleave';
 import 'jquery-mask-plugin'
 
+// lembrar de remover esse node module "Validator"
 //validator.js - validations field
 import validator from 'validator';
 // var validator = require('validator');
@@ -16,7 +17,7 @@ import validator from 'validator';
 
 // Enable tooltips
 $(document).on('turbolinks:load', function() {
-// $( document ).ready(function() {
+    // $( document ).ready(function() {
     //     if ($("#myAreaChart").length) {
     //         myCharts.start();
     //     }
@@ -207,7 +208,7 @@ $(document).on('turbolinks:load', function() {
         });
     }
 
-    // invoice_date_field and due_date_field validations
+    // invoice_date_field and due_date_field validations on project page
     if (($('.invoice_date_field').length) && ($('.due_date_field').length)) {
         function compareDate(date1,date2){
             date1 = date1.split("-").reverse().join("-"); //formating 
@@ -260,6 +261,96 @@ $(document).on('turbolinks:load', function() {
                 $( ".byProject.invoice-date-error" ).show();
             }
         });
+    }
+
+    // invoice_date_field and due_date_field validations on task_schedule page and dashboard page (timer)
+    if (($('.task_schedule_form').length) || ($('.dashboard_timer_form').length)) {
+        if (($('.start_date_field').length) && ($('.end_date_field').length)) {
+            // write on time input
+            $(function() {
+                $('.start_date_field, .end_date_field').on("change", function() {
+                    var start_date = $(".start_date_field").val()
+                    var end_date = $(".end_date_field").val()
+                    var duration_start_to_end_changed = moment.duration(moment(end_date).diff(moment(start_date))); // get difference
+                    var duration_seconds = duration_start_to_end_changed.asSeconds(); // convert to seconds
+                    var formatted = moment.duration(duration_seconds, "seconds").format('HH:mm:ss'); // convert seconds to time (HH:mm:ss)
+                    $(".time_field").val(formatted)
+                    
+                    // fix time_field (left zero)
+                    var time_field = $(".time_field").val()
+                    if (time_field.length == 5) {
+                        $(".time_field").val('00:'+time_field)
+                    } else if (time_field.length == 2) {
+                        $(".time_field").val('00:00:00')
+                    }
+                });
+
+                //format time field
+                // $('.time_field').on("change", function() {
+                //     console.log('entrou');
+                //     var time_field = $(".time_field").val()
+                //     if (time_field.length == 5) {
+                //         $(".time_field").val('00:'+time_field)
+                //     }
+                // });
+            });
+
+            // when submit form, add classes error and show div error
+            $("form#new_task_schedule").off().on("submit", function(){
+                const start_date = $(".start_date_field").val()
+                const end_date = $(".end_date_field").val()
+                const duration_time = $(".time_field").val()
+
+                if (moment(end_date).isAfter(start_date) == false) {
+                    // reset error
+                    clearAllErrorsClasses();
+
+                    // show error
+                    $(".start_date_field").addClass("input-error");
+                    $(".end_date_field").addClass("input-error");
+                    $( ".invoice-date-error.msg1-error" ).show();
+                    $( ".invoice-date-error.msg2-error" ).show();
+                    $('<p>A data de início deve ser inferior a data de conclusão.</p>').appendTo('.invoice-date-error.msg1-error');
+                    $('<p>A data de conclusão deve ser superior a data de início.</p>').appendTo('.invoice-date-error.msg2-error');
+                    return false;
+                } else { // if exist difference between time interval
+                    // reset div
+                    clearAllErrorsClasses();
+
+                    // show error
+                    var duration_start_to_end = moment.duration(moment(end_date).diff(moment(start_date)));
+                    duration_start_to_end = duration_start_to_end.asSeconds();
+                    var durantion_time_field = moment.duration(duration_time).asSeconds();                  
+
+                    if (duration_start_to_end != durantion_time_field) {
+                        $(".start_date_field").addClass("input-error");
+                        $(".end_date_field").addClass("input-error");
+                        $(".time_field").addClass("input-error");
+                        $( ".invoice-date-error.msg3-error" ).show();
+                        $('<p>O intervalo de tempo entre a data de início e a data de conclusão devem corresponder ao campo <strong>tempo decorrido</strong>.</p>').appendTo('.invoice-date-error.msg3-error');
+                        return false;
+                    }
+                    // convert seconds to time
+                    // d = moment.duration({s: 1000});
+                    // moment().startOf('day').add(d).format('HH:mm:ss')
+                }
+
+            })
+        }
+    }
+
+    // clear error-classes
+    function clearAllErrorsClasses() {
+        // reset div and classes errors
+        $('.invoice-date-error.msg1-error').text('');
+        $('.invoice-date-error.msg2-error').text('');
+        $('.invoice-date-error.msg3-error').text('');
+        $( ".invoice-date-error.msg1-error" ).hide();
+        $( ".invoice-date-error.msg2-error" ).hide();
+        $( ".invoice-date-error.msg3-error" ).hide();
+        $( ".start_date_field" ).removeClass("input-error");
+        $( ".end_date_field" ).removeClass("input-error");
+        $( ".time_field" ).removeClass("input-error");
     }
 
 });

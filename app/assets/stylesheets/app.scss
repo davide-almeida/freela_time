@@ -102,3 +102,15 @@
 .input-error {
   border-color: #dc3545;
 }
+
+// task_schedule page - time_field
+.time_field {
+  // user-select: none;
+  // -moz-user-select: none;
+  // -khtml-user-select: none;
+  // -webkit-user-select: none;
+  // -o-user-select: none;
+  background-color: #eaecf4;
+  opacity: 1;
+  pointer-events:none;
+}
