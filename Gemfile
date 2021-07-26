@@ -56,6 +56,14 @@ gem 'time_diff'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # https://github.com/rspec/rspec-rails
+  gem 'rspec-rails', '~> 5.0.0'
+  # https://github.com/thoughtbot/factory_bot -> https://github.com/thoughtbot/factory_bot_rails
+  gem 'factory_bot_rails'
+  # https://github.com/thoughtbot/shoulda-matchers
+  gem 'shoulda-matchers', '~> 5.0'
+  # https://github.com/faker-ruby/faker
+  gem 'faker'
 end
 
 group :development do

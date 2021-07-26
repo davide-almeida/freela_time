@@ -1,5 +1,5 @@
 class App::UsersController < AppController
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     # @users = User.all
@@ -19,6 +19,9 @@ class App::UsersController < AppController
   end
 
   def edit
+  end
+
+  def show
   end
 
   def destroy

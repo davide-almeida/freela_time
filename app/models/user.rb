@@ -15,6 +15,9 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :goals, allow_destroy: true
   accepts_nested_attributes_for :setting, allow_destroy: true
 
+  # validates :first_name, :last_name, :email, :password, :password_confirmation, presence: true
+  validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
