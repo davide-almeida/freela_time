@@ -32,7 +32,8 @@ $(document).on('turbolinks:load', function() {
             data: data.storage_percent_print,
             backgroundColor: ['#4e73df', '#1cc88a'],
             hoverBackgroundColor: ['#2e59d9', '#17a673'],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
+            borderColor: '#282a36',
+            hoverBorderColor: "rgba(98, 114, 164, 0.4)",
           }],
           // datasets: [{
           //   data: [55, 30, 15],
@@ -44,9 +45,9 @@ $(document).on('turbolinks:load', function() {
         options: {
           maintainAspectRatio: false,
           tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: '#dddfeb',
+            backgroundColor: "#64677b",
+            bodyFontColor: "#F8F8F2",
+            borderColor: '#282a36',
             borderWidth: 1,
             xPadding: 15,
             yPadding: 15,

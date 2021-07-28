@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   #jobs
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
-  Rails.application.routes.draw do
-    mount Sidekiq::Web => '/sidekiq'
-  end
+  mount Sidekiq::Web => '/sidekiq'
 
   #default app routes
   namespace :app do
@@ -38,6 +36,7 @@ Rails.application.routes.draw do
     # get '/dashboard_reports/print_in_payment_report', to: 'dashboard_reports#print_in_payment_report'
     get 'dashboard/filter_dashboard_report_projects_by_company', to: 'dashboard#filter_dashboard_report_projects_by_company'
     resources :users
+    resources :settings
   end
   
   #default site routes

@@ -116,11 +116,16 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Perfil
                 <% end %>
-                <!--
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                <% if (current_user.setting.present?) && (current_user.setting.theme.present?) %>
+                    <% link_setting = edit_app_setting_path(current_user.setting.id) %>
+                <% else %>
+                    <% link_setting = new_app_setting_path %>
+                <% end %>
+
+                <%= link_to link_setting, class:'dropdown-item' do %>
+                    <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
                     Configurações
-                </a> -->
+                <% end %>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

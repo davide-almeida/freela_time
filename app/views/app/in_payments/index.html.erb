@@ -131,7 +131,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Projeto</th>
@@ -170,7 +170,7 @@
                                                 <%= in_parcel.status %>
                                             <% end %>
                                         </td>
-                                        <td width="12%">
+                                        <td width="8%">
                                             <%# project_status change %>
                                             <% if in_parcel.status == "A pagar" %>
                                                 <% @change_button_description = "Status: Pago" %>
@@ -180,10 +180,10 @@
                                                 <% @change_button_description = "Status: A pagar" %>
                                             <% end %>
                                             <%# action buttons %>
-                                            <%= link_to app_in_payment_in_parcel_change_status_path(in_parcel.in_payment.id, in_parcel.id, :status => in_parcel.status), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                            <%= link_to app_in_payment_in_parcel_change_status_path(in_parcel.in_payment.id, in_parcel.id, :status => in_parcel.status), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
                                                 <i class="fas fa-fw fa-check"></i>
                                             <% end %>
-                                            <%= link_to edit_app_in_payment_in_parcel_path(in_parcel.in_payment.id, in_parcel.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                            <%= link_to edit_app_in_payment_in_parcel_path(in_parcel.in_payment.id, in_parcel.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                                 <i class="fas fa-fw fa-edit"></i>
                                             <% end %>
                                             <%#= link_to app_project_path(project.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir o projeto #{project.name} e suas respectivas tarefas?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>

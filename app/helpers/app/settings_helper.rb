@@ -1,0 +1,2 @@
+module App::SettingsHelper
+end

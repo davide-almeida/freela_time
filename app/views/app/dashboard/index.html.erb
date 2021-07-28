@@ -245,7 +245,7 @@
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Ocupado: <%= @storage_sum %>
+                            <i class="fas fa-circle text-primary-theme"></i> Ocupado: <%= @storage_sum %>
                         </span>
                         <span class="mr-2">
                             <i class="fas fa-circle text-success"></i> Livre: <%= @empty_calc %>
@@ -292,10 +292,10 @@
                                     </div>
 
                                 <% else %>
-                                    <h4 class="small font-weight-bold">Tipo: <%=goal.goal_type%></h4>
-                                    <h4 class="small font-weight-bold">Meta: <%=humanized_money_with_symbol goal_in_payment.goal_value%></h4>
-                                    <h4 class="small font-weight-bold">Valor atual: <%=humanized_money_with_symbol @in_parcel_sum/100.to_f%></h4>
-                                    <h4 class="small font-weight-bold">Período: <%=l(goal_in_payment.start_date.to_date)%> à <%=l(goal_in_payment.end_date.to_date)%>
+                                    <h4 class="small font-weight-bold"><span class="subtitle-blue">Tipo:</span> <%=goal.goal_type%></h4>
+                                    <h4 class="small font-weight-bold"><span class="subtitle-blue">Meta:</span> <%=humanized_money_with_symbol goal_in_payment.goal_value%></h4>
+                                    <h4 class="small font-weight-bold"><span class="subtitle-blue">Valor atual:</span> <%=humanized_money_with_symbol @in_parcel_sum/100.to_f%></h4>
+                                    <h4 class="small font-weight-bold"><span class="subtitle-blue">Período:</span> <%=l(goal_in_payment.start_date.to_date)%> <span class="subtitle-blue">à</span> <%=l(goal_in_payment.end_date.to_date)%>
                                         <span class="float-right">
                                             <%=@calc_percent.to_s(:rounded, precision: 2, round_mode: :up)%>%
                                         </span>

@@ -46,10 +46,11 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Descrição</th>
                             <th>Quant. de projetos</th>
                             <th>Quant. de tarefas</th>
                             <th>Ações</th>
@@ -59,6 +60,7 @@
                         <% @companies.each do |company| %>
                             <tr>
                                 <td><%= company.name %></td>
+                                <td><%= company.description %></td>
                                 <td>
                                     <% projects_count = company.projects.count %>
                                     <% if projects_count > 0 %>
@@ -78,11 +80,11 @@
                                         <i>Não há tarefas cadastradas.</i>
                                     <% end %>
                                 </td>
-                                <td width="5%">
-                                    <%= link_to edit_app_company_path(company.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                <td width="8%">
+                                    <%= link_to edit_app_company_path(company.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_company_path(company.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir a empresa #{company.name}, seus respectivos projetos, tarefas, horas de trabalho e pagamentos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_company_path(company.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir a empresa #{company.name}, seus respectivos projetos, tarefas, horas de trabalho e pagamentos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

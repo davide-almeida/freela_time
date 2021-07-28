@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Empresa</th>
@@ -119,13 +119,13 @@
                                         <% @completed_projects = true %>
                                     <% end %>
                                     <%# action buttons %>
-                                    <%= link_to app_project_change_status_path(project.id, :status => project.status, completed_projects: @completed_projects), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                    <%= link_to app_project_change_status_path(project.id, :status => project.status, completed_projects: @completed_projects), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
                                         <i class="fas fa-fw fa-check"></i>
                                     <% end %>
-                                    <%= link_to edit_app_project_path(project.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                    <%= link_to edit_app_project_path(project.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_project_path(project.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir o projeto #{project.name} e suas respectivas tarefas, horas de trabalho e pagamentos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_project_path(project.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o projeto #{project.name} e suas respectivas tarefas, horas de trabalho e pagamentos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

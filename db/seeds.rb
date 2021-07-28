@@ -15,8 +15,11 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando Company..."
-Company.create!(name: "Empresa 1", description: "Descrição da empresa 1", user_id: 1)
+# Company.create!(name: "Empresa 1", description: "Descrição da empresa 1", user_id: 1)
 # Company.create!(name: "Empresa 2", description: "Descrição da empresa 2", user_id: 1)
+30.times do |i|
+    Company.create!(name: "Empresa #{i}", description: "Descrição da empresa #{i}", user_id: 1)
+end
 puts "Company cadastrados!"
 puts "-----------------------"
 
@@ -115,6 +118,6 @@ puts "-----------------------"
 
 puts "-----------------------"
 puts "Cadastrando Settings..."
-Setting.create!(user_id: 1)
+Setting.create!(user_id: 1, theme: 0)
 puts "Settings cadastradas!"
 puts "-----------------------"

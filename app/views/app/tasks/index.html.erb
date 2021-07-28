@@ -62,7 +62,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Empresa</th>
@@ -87,7 +87,7 @@
                                 </td>
                                 <td><%= task.status %></td>
 
-                                <td width="12%" class="text-center">
+                                <td width="14%" class="text-center">
                                     <%# task_status change %>
                                     <% if task.status == "A fazer" %>
                                         <% @change_button_description = "Status: Em desenvolvimento" %>
@@ -97,16 +97,16 @@
                                         <% @change_button_description = "Status: A fazer" %>
                                     <% end %>
                                     <%# action buttons %>
-                                    <%= link_to app_task_change_status_path(task.id, :status => task.status), class: "btn btn-success btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                    <%= link_to app_task_change_status_path(task.id, :status => task.status), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
                                         <i class="fas fa-fw fa-check"></i>
                                     <% end %>
-                                    <%= link_to new_app_task_task_schedule_path(task.id), class: "btn btn-info btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Horários"} do  %>
+                                    <%= link_to new_app_task_task_schedule_path(task.id), class: "btn btn-info rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Cadastrar Horários"} do  %>
                                         <i class="fas fa-fw fa-clock"></i>
                                     <% end %>
-                                    <%= link_to edit_app_task_path(task.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                    <%= link_to edit_app_task_path(task.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_task_path(task.id, :task_total_work_time => "#{@calc_hour}:#{@calc_minute}:#{@calc_second}"), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir esta tarefa?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_task_path(task.id, :task_total_work_time => "#{@calc_hour}:#{@calc_minute}:#{@calc_second}"), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir esta tarefa?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

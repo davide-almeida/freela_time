@@ -64,7 +64,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Início</th>
@@ -79,13 +79,13 @@
                                 <td><%= schedule.start_date.strftime('%d/%m/%Y - %H:%M') %></td>
                                 <td><%= schedule.end_date.strftime('%d/%m/%Y - %H:%M') %></td>
                                 <td><%= schedule.work_hour %></td>
-                                <td width="5%">
+                                <td width="8%">
                                     <%#= link_to "Visualizar", app_task_path(task.id) %>
                                     <%#= link_to "Horários", new_app_task_task_schedule_path(task.id) %>
-                                    <%= link_to edit_app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-primary btn-circle btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                    <%= link_to edit_app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <i class="fas fa-fw fa-edit"></i>
                                     <% end %>
-                                    <%= link_to app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-danger btn-circle btn-sm", data: {confirm: "Você deseja excluir este horário de trabalho e seu respectivo pagamento?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                    <%= link_to app_task_task_schedule_path(@task.id, schedule.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir este horário de trabalho e seu respectivo pagamento?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

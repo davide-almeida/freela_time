@@ -123,12 +123,12 @@ $(document).on('turbolinks:load', function() {
             display: false
           },
           tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
+            backgroundColor: "#64677b",
+            bodyFontColor: "#F8F8F2",
             titleMarginBottom: 10,
-            titleFontColor: '#6e707e',
+            titleFontColor: '#fff',
             titleFontSize: 14,
-            borderColor: '#dddfeb',
+            borderColor: '#282a36',
             borderWidth: 1,
             xPadding: 15,
             yPadding: 15,

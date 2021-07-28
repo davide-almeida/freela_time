@@ -25,8 +25,13 @@
     <%= javascript_pack_tag 'app', 'data-turbolinks-track': 'reload' %>
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css"> -->
 
-    <!-- DarkTheme - https://github.com/ForEvolve/bootstrap-dark -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css" /> -->
+    <!-- Themes -->
+    <!-- DarCool Theme -->
+    <% if (current_user.setting.present?) && (current_user.setting.theme.present?) %>
+        <% if current_user.setting.theme == "Darkcool" %>
+          <%= stylesheet_link_tag 'app_themes', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <% end %>
+    <% end %>
 
 
   </head>
