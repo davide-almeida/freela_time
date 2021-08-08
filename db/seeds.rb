@@ -8,9 +8,33 @@
 
 puts "-----------------------"
 puts "Cadastrando USERS..."
-User.create!(first_name: "Davide", last_name: "Almeida", email: "davide@davide.com.br", password: "123456", password_confirmation: "123456")
-User.create!(first_name: "Matheus", last_name: "Paulino", email: "mnatheus@matheus.com.br", password: "123456", password_confirmation: "123456")
+User.create!(first_name: "Davide", last_name: "Almeida", email: "davide@davide.com", password: "123123", password_confirmation: "123123")
+User.create!(first_name: "Teste", last_name: "Teste", email: "teste@teste.com.br", password: "123123", password_confirmation: "123123")
+# User.create!(first_name: "Diego", last_name: "Lima", email: "diego@diego.com.br", password: "123456", password_confirmation: "123456")
 puts "USERS cadastrados!"
+puts "-----------------------"
+
+puts "-----------------------"
+puts "Cadastrando WorkGroup..."
+WorkGroup.create!(name: "WorkGroup 1 - user 1", description:"Description do WorkGroup 1 pertencente ao user 1", owner_user_id: 1)
+WorkGroup.create!(name: "WorkGroup 1 - user 2", description:"Description do WorkGroup 1 pertencente ao user 2", owner_user_id: 2)
+puts "WorkGroups cadastrados!"
+puts "-----------------------"
+
+puts "-----------------------"
+puts "Cadastrando UserWorkGroup..."
+UserWorkGroup.create!(user_id: 1, work_group_id: 1)
+UserWorkGroup.create!(user_id: 2, work_group_id: 1)
+UserWorkGroup.create!(user_id: 2, work_group_id: 2)
+puts "UserWorkGroups cadastrados!"
+puts "-----------------------"
+
+puts "-----------------------"
+# Tutorial: https://stackoverflow.com/questions/49213989/implement-a-friendship-model-with-has-and-belongs-to-many-in-rails
+puts "Cadastrando Friendships..."
+Friendship.create!(user_id: 2, friend_id: 1) #User 2 have User 1 like a friend
+Friendship.create!(user_id: 1, friend_id: 2) #User 1 have User 2 like a friend
+puts "Friendships cadastrados!"
 puts "-----------------------"
 
 puts "-----------------------"
@@ -18,7 +42,7 @@ puts "Cadastrando Company..."
 # Company.create!(name: "Empresa 1", description: "Descrição da empresa 1", user_id: 1)
 # Company.create!(name: "Empresa 2", description: "Descrição da empresa 2", user_id: 1)
 30.times do |i|
-    Company.create!(name: "Empresa #{i}", description: "Descrição da empresa #{i}", user_id: 1)
+    Company.create!(name: "Empresa #{i}", description: "Descrição da empresa #{i}", user_id: 1, work_group_id: nil)
 end
 puts "Company cadastrados!"
 puts "-----------------------"

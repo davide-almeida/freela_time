@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     get 'dashboard/filter_dashboard_report_projects_by_company', to: 'dashboard#filter_dashboard_report_projects_by_company'
     resources :users
     resources :settings
+    resources :work_groups
+    resources :user_contacts, only: [:index]
+    match '/user_contacts/destroy_friendship', to: 'user_contacts#destroy_friendship', via: 'post'
   end
   
   #default site routes
@@ -46,9 +49,10 @@ Rails.application.routes.draw do
   end
 
   #devise routes
-  devise_for :users#, :skip => [:registrations]
+  # devise_for :users, :skip => [:registrations]
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
   devise_scope :user do
-    get '/users/sign_out' => 'devise/sessions#destroy'
+    get "/users/sign_out", to: "devise/sessions#destroy"
   end
   
   root to: 'site/home#index'

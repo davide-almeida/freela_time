@@ -15,7 +15,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Autenticação</h1>
                                     </div>
                                     <!-- <form class="user"> -->
                                     <%= form_for(resource, html:{class:'user'}, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -35,7 +35,7 @@
                                             </div>
                                         </div>-->
 
-                                        <%= f.submit "Login", class:"btn btn-primary btn-user btn-block" %>
+                                        <%= f.submit "Entrar", class:"btn btn-primary btn-user btn-block" %>
                                         <!--
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
@@ -47,16 +47,20 @@
                                     <!-- </form> -->
                                     <% end %>
                                     <hr>
-                                    <!--
+                                    
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <%= link_to new_user_password_path, class:"small" do %>
+                                            Esqueceu a senha?
+                                        <% end %>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <%= link_to new_user_registration_path, class:"small" do %>
+                                            Criar uma conta!
+                                        <% end %>
                                     </div>
                                     <div class="text-center">
                                         <%#= render "users/shared/links" %>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>

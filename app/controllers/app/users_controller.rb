@@ -21,20 +21,6 @@ class App::UsersController < AppController
   def edit
   end
 
-  def show
-  end
-
-  def destroy
-    # user_email = @user.email
-
-    # if @user.destroy
-    #   redirect_to app_users_path, notice: "O cadastro #{user_email} foi excluido com sucesso!"
-    # else
-    #   render :index
-    # end
-
-  end
-
   def update
     passwd = params[:user][:password]
     passwd_confirmation = params[:user][:password_confirmation]
@@ -48,6 +34,20 @@ class App::UsersController < AppController
     else
       render :edit
     end
+  end
+
+  def show
+  end
+
+  def destroy
+    # user_email = @user.email
+
+    # if @user.destroy
+    #   redirect_to app_users_path, notice: "O cadastro #{user_email} foi excluido com sucesso!"
+    # else
+    #   render :index
+    # end
+
   end
 
   private

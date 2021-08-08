@@ -7,4 +7,6 @@ class Company < ApplicationRecord
     accepts_nested_attributes_for :tasks, allow_destroy: true
 
     validates :name, :user_id, presence: true
+
+    belongs_to :work_group, optional: true
 end

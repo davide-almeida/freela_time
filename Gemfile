@@ -52,6 +52,13 @@ gem 'groupdate'
 # gem 'wkhtmltopdf-binary'
 # https://github.com/abhidsm/time_diff - Ex.: Time.diff(DateTime.now, DateTime.now + 1.hour + 1.day, '%h:%m:%s')[:diff]
 gem 'time_diff'
+# https://github.com/ncri/nested_form_fields
+gem 'jquery-rails'
+gem 'nested_form_fields'
+# https://github.com/nathanvda/cocoon
+# gem "cocoon"
+# https://github.com/tsechingho/chosen-rails - options: https://harvesthq.github.io/chosen/options.html
+gem 'chosen-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

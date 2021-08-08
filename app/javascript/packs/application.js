@@ -41,4 +41,9 @@ moment().format();
 var momentDurationFormatSetup = require("moment-duration-format");
 momentDurationFormatSetup(moment);
 
+// cocoon gem dependencies
+// var jquery = require("jquery");
+// window.jquery = jquery
+// var cocoon = require("@nathanvda/cocoon");
+// window.cocoon = cocoon
 

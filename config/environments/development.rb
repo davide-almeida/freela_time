@@ -3,8 +3,30 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  #Devise config
+  # Devise config
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Mail trap config - https://mailtrap.io/inboxes/703917/messages
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => '6fe782aed4bc6e',
+  #   :password => 'a893a5ee1eb730',
+  #   :address => 'smtp.mailtrap.io',
+  #   :domain => 'smtp.mailtrap.io',
+  #   :port => '2525',
+  #   :authentication => :cram_md5
+  # }
+  # access credentials: EDITOR=nano rails credentials:edit
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "mail.davidealmeida.com.br",
+    domain: "davidealmeida.com.br",
+    port: 587,
+    user_name: Rails.application.credentials.devise_email_sender,
+    password: Rails.application.credentials.devise_password_sender,
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

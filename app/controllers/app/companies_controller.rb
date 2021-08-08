@@ -2,6 +2,7 @@ class App::CompaniesController < AppController
   before_action :set_company_params, only: [:edit, :update, :destroy]
 
   def index
+    # console
     @companies = current_user.companies
   end
 

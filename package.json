@@ -3,11 +3,13 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.6.0",
+    "cocoon-js": "^0.0.5",
     "datatables.net-bs4": "^1.10.24",
     "jquery": "^3.6.0",
     "jquery-mask-plugin": "^1.14.16",

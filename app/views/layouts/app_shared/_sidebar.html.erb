@@ -77,6 +77,26 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    <div class="sidebar-heading">
+        Social
+    </div>
+
+    <li class="nav-item">
+        <%= link_to app_user_contacts_path, class:'nav-link' do %>
+            <i class="fas fa-user-circle"></i>
+            <span>Contatos</span>
+        <% end %>
+    </li>
+
+    <li class="nav-item">
+        <%= link_to app_work_groups_path, class:'nav-link' do %>
+            <i class="fas fa-users"></i>
+            <span>Grupos de trabalho</span>
+        <% end %>
+    </li>
+
+    <hr class="sidebar-divider">
+
     <!-- Heading -->
     <!--<div class="sidebar-heading">
         Análise

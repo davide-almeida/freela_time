@@ -1,0 +1,86 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Contatos</h1>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contatos</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Opções</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 mr-2 b-3 p-1">
+                                <%= link_to new_app_work_group_path, class:'btn btn-primary btn-icon-split' do %>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-user-circle"></i>
+                                    </span>
+                                    <span class="text">Convidar</span>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Contatos</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Grupos em comum</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @user_contacts.each do |user_contact| %>
+                            <tr>
+                                <td><%= user_contact.first_name %> <%= user_contact.last_name %></td>
+                                <td><%= user_contact.email %></td>
+                                <td>
+                                    <%= user_contact.work_groups.joins(:users).where('users.id = ?', current_user.id).count %>
+                                </td>
+                                <td width="12%">
+                                    <%#= link_to app_project_change_status_path(project.id, :status => project.status, completed_projects: @completed_projects), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
+                                        <!--<i class="fas fa-fw fa-check"></i>-->
+                                    <%# end %>
+                                    <%#= link_to edit_app_work_group_path(work_group.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                        <!--<i class="fas fa-fw fa-edit"></i>-->
+                                    <%# end %>
+                                    <%= link_to app_user_contacts_destroy_friendship_path(user_contact: user_contact.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o usuário #{user_contact.first_name} da sua lista de contatos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :post do  %>
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    <% end %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

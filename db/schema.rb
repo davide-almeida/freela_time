@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_27_222128) do
+ActiveRecord::Schema.define(version: 2021_08_06_181821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,16 @@ ActiveRecord::Schema.define(version: 2021_07_27_222128) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.bigint "work_group_id"
     t.index ["user_id"], name: "index_companies_on_user_id"
+    t.index ["work_group_id"], name: "index_companies_on_work_group_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "goal_in_payments", force: :cascade do |t|
@@ -170,6 +179,15 @@ ActiveRecord::Schema.define(version: 2021_07_27_222128) do
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "user_work_groups", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "work_group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_work_groups_on_user_id"
+    t.index ["work_group_id"], name: "index_user_work_groups_on_work_group_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -184,11 +202,20 @@ ActiveRecord::Schema.define(version: 2021_07_27_222128) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "work_groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "owner_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "by_hours", "projects"
   add_foreign_key "by_projects", "projects"
   add_foreign_key "companies", "users"
+  add_foreign_key "companies", "work_groups"
   add_foreign_key "goal_in_payments", "goals"
   add_foreign_key "goals", "users"
   add_foreign_key "in_parcels", "in_payments"
@@ -203,4 +230,6 @@ ActiveRecord::Schema.define(version: 2021_07_27_222128) do
   add_foreign_key "tasks", "companies"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users"
+  add_foreign_key "user_work_groups", "users"
+  add_foreign_key "user_work_groups", "work_groups"
 end
