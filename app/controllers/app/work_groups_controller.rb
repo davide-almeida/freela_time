@@ -56,16 +56,26 @@ class App::WorkGroupsController < AppController
   end
 
   def show
+    
   end
 
   def destroy
-    if @work_group.owner_user_id == current_user.id
+    if @work_group.owner_user_id == current_user.id # if current_user is owner group
       work_group_name = @work_group.name
       if @work_group.destroy
         redirect_to app_work_groups_path, notice: "O grupo #{@work_group.name} foi excluído com sucesso!"
       else
         render :new
       end
+    elsif @work_group.owner_user_id != current_user.id # if current_user isn't owner group
+      # remove current_user for workgroup
+      @user_work_group = current_user.user_work_groups.find_by_work_group_id(@work_group.id)
+      if @user_work_group.destroy
+        redirect_to app_work_groups_path, notice: "Você saiu do grupo #{@work_group.name}!"
+      else
+        render :new
+      end
+
     else
       redirect_to app_work_groups_path, alert: "O grupo #{@work_group.name} só pode ser excluído pelo seu respectivo líder!"
     end

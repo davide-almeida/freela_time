@@ -38,8 +38,11 @@ Rails.application.routes.draw do
     resources :users
     resources :settings
     resources :work_groups
-    resources :user_contacts, only: [:index]
-    match '/user_contacts/destroy_friendship', to: 'user_contacts#destroy_friendship', via: 'post'
+    resources :friends, only: [:index]
+    resources :invites do
+      put 'accept_invite', to: 'accept_invite'
+    end      
+    match '/friends/destroy_friendship', to: 'friends#destroy_friendship', via: 'post'
   end
   
   #default site routes
@@ -54,6 +57,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     get "/users/sign_out", to: "devise/sessions#destroy"
   end
-  
+  # Devise redirect after sign_up
+  get 'redirect_to_dashboard', to: 'app/dashboard#index'
+
   root to: 'site/home#index'
 end

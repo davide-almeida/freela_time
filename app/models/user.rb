@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  # attr_accessor :invite
+
   # belongs_to :user, optional: true
   # has_many :users
   # has_many :friendships, :foreign_key => "user_id", :dependent => :destroy
@@ -33,7 +35,9 @@ class User < ApplicationRecord
   has_many :project_storages
   has_many :goals
   has_one :setting
-  has_many :user_contacts
+  # has_many :user_contacts
+  has_many :invites, dependent: :destroy
+  
   accepts_nested_attributes_for :companies, allow_destroy: true
   accepts_nested_attributes_for :projects, allow_destroy: true
   accepts_nested_attributes_for :tasks, allow_destroy: true

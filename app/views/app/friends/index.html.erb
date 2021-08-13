@@ -25,11 +25,11 @@
                     <div class="col-sm-6 col-xs-12">
                         <div class="row">
                             <div class="col-xs-12 mr-2 b-3 p-1">
-                                <%= link_to new_app_work_group_path, class:'btn btn-primary btn-icon-split' do %>
+                                <%= link_to new_app_invite_path, class:'btn btn-primary btn-icon-split' do %>
                                     <span class="icon text-white-50">
                                         <i class="fas fa-user-circle"></i>
                                     </span>
-                                    <span class="text">Convidar</span>
+                                    <span class="text">Convites</span>
                                 <% end %>
                             </div>
                         </div>
@@ -56,12 +56,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% @user_contacts.each do |user_contact| %>
+                        <% @friends.each do |friend| %>
                             <tr>
-                                <td><%= user_contact.first_name %> <%= user_contact.last_name %></td>
-                                <td><%= user_contact.email %></td>
+                                <td><%= friend.first_name %> <%= friend.last_name %></td>
+                                <td><%= friend.email %></td>
                                 <td>
-                                    <%= user_contact.work_groups.joins(:users).where('users.id = ?', current_user.id).count %>
+                                    <%= friend.work_groups.joins(:users).where('users.id = ?', current_user.id).count %>
                                 </td>
                                 <td width="12%">
                                     <%#= link_to app_project_change_status_path(project.id, :status => project.status, completed_projects: @completed_projects), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
@@ -70,7 +70,7 @@
                                     <%#= link_to edit_app_work_group_path(work_group.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
                                         <!--<i class="fas fa-fw fa-edit"></i>-->
                                     <%# end %>
-                                    <%= link_to app_user_contacts_destroy_friendship_path(user_contact: user_contact.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o usuário #{user_contact.first_name} da sua lista de contatos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :post do  %>
+                                    <%= link_to app_friends_destroy_friendship_path(friend: friend.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o usuário #{friend.first_name} da sua lista de contatos?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :post do  %>
                                         <i class="fas fa-fw fa-trash"></i>
                                     <% end %>
                                 </td>

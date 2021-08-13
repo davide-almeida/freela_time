@@ -17,6 +17,16 @@
     background-color: #14141b !important;
 }
 
+.topbar .dropdown-list .dropdown-item {
+    white-space: normal;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-left: 1px solid #4e73df;
+    border-right: 1px solid #4e73df;
+    border-bottom: 1px solid #4e73df;
+    line-height: 1.3rem;
+}
+
 #wrapper #content-wrapper {
     // background-color: #252525;
     background-color: #14141b;

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "App::UserContacts", type: :request do
+RSpec.describe "App::Friends", type: :request do
   describe "GET /index" do
     it "returns http success" do
-      get "/app/user_contacts/index"
+      get "/app/friends/index"
       expect(response).to have_http_status(:success)
     end
   end

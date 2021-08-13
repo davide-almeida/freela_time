@@ -1,0 +1,8 @@
+Olá <%= @email %>!
+<%= @current_user.first_name %> <%= @current_user.last_name %> te convida para conhecer o FreelaTime!
+Um sistema de gestão de tempo para pessoas desenvolvedoras e para empresas do ramo.
+Para aceitar o convite, basta <strong><%= link_to "Clicar Aqui", @link, target: "_blank" %></strong>, criar sua conta, acessar o FreelaTime e bora codar!
+
+Atenciosamente,
+Equipe FreelaTime
+<%= link_to "freelatime.com.br", 'www.freelatime.com.br', target: "_blank" %>

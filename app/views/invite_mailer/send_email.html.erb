@@ -1,0 +1,8 @@
+<h3>Olá <%= @email.html_safe %>!</h3>
+<p><strong><%= @current_user.first_name %> <%= @current_user.last_name %></strong> te convida para conhecer o FreelaTime!</p>
+<p>Um sistema de gestão de tempo para pessoas desenvolvedoras e para empresas do ramo.</p>
+<p>Para aceitar o convite, basta <strong><%= link_to "Clicar Aqui", @link, target: "_blank" %></strong>, criar sua conta, acessar o FreelaTime e bora codar!</p>
+<br>
+<p>Atenciosamente, <br />
+Equipe FreelaTime <br />
+<%= link_to "freelatime.com.br", 'www.freelatime.com.br', target: "_blank" %></p>

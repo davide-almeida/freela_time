@@ -41,6 +41,7 @@
                                             <% end %><br />
                                             <%= f.password_field :password_confirmation, autocomplete: "current-password", class:"form-control form-control-user", placeholder:"Senha" %>
                                         </div>
+                                        <%= f.hidden_field(:invite, :value => params[:invite]) if params[:invite] %>
                                         <%= f.submit "Criar minha conta", class:"btn btn-primary btn-user btn-block" %>
                                     <% end %>
                                     

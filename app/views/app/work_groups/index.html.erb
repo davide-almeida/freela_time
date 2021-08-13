@@ -67,11 +67,24 @@
                                     <%#= link_to app_project_change_status_path(project.id, :status => project.status, completed_projects: @completed_projects), class: "btn btn-success rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': @change_button_description}, method: :put do  %>
                                         <!--<i class="fas fa-fw fa-check"></i>-->
                                     <%# end %>
-                                    <%= link_to edit_app_work_group_path(work_group.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
-                                        <i class="fas fa-fw fa-edit"></i>
+                                    <%= link_to app_work_group_path(work_group.id), class: "btn btn-info rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Detalhes"}, method: :get do  %>
+                                        <i class="fas fa-fw fa-search"></i>
                                     <% end %>
-                                    <%= link_to app_work_group_path(work_group.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o grupo #{work_group.name} ?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
-                                        <i class="fas fa-fw fa-trash"></i>
+                                    <%# edit if lider %>
+                                    <% if current_user.id == work_group.owner_user_id %>
+                                        <%= link_to edit_app_work_group_path(work_group.id), class: "btn btn-primary rounded btn-sm", data: {'toggle': "tooltip", 'placement': "top", 'original-title': "Editar"}, method: :get do  %>
+                                            <i class="fas fa-fw fa-edit"></i>
+                                        <% end %>
+                                    <% end %>
+                                    <%# remove or out group %>
+                                    <% if work_group.owner_user_id == current_user.id %>
+                                        <%= link_to app_work_group_path(work_group.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja excluir o grupo #{work_group.name} ?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                            <i class="fas fa-fw fa-trash"></i>
+                                        <% end %>
+                                    <% elsif work_group.owner_user_id != current_user.id %>
+                                        <%= link_to app_work_group_path(work_group.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja sair do grupo #{work_group.name} ?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Sair do grupo"}, method: :delete do  %>
+                                            <i class="fas fa-fw fa-sign-out-alt"></i>
+                                        <% end %>
                                     <% end %>
                                 </td>
                             </tr>

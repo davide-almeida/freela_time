@@ -8,9 +8,9 @@
 
 puts "-----------------------"
 puts "Cadastrando USERS..."
-User.create!(first_name: "Davide", last_name: "Almeida", email: "davide@davide.com", password: "123123", password_confirmation: "123123")
-User.create!(first_name: "Teste", last_name: "Teste", email: "teste@teste.com.br", password: "123123", password_confirmation: "123123")
-# User.create!(first_name: "Diego", last_name: "Lima", email: "diego@diego.com.br", password: "123456", password_confirmation: "123456")
+User.create!(first_name: "Davide", last_name: "Almeida", email: "davide@davide.com", password: "123123", password_confirmation: "123123", host_id: nil)
+User.create!(first_name: "Teste", last_name: "Teste", email: "teste@teste.com.br", password: "123123", password_confirmation: "123123", host_id: nil)
+# User.create!(first_name: "Diego", last_name: "Lima", email: "diego@diego.com.br", password: "123456", password_confirmation: "123456", host_id: nil)
 puts "USERS cadastrados!"
 puts "-----------------------"
 

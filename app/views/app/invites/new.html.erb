@@ -1,0 +1,100 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+ 
+    <!-- Page Heading -->
+    <p class="mb-0">
+        <%#= @task.project.company.name %>
+    </p>
+    <h1 class="h3 mb-2 text-gray-800">Convites</h1>
+    <!--
+    <p class="mb-4">
+        Alguma descrição...
+    </p>
+    -->
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><%= link_to "Dashboard", app_dashboard_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "Contatos", app_friends_path %></li>
+                    <li class="breadcrumb-item active" aria-current="page">Convites</li>
+                </ol>
+            </nav>
+	    </div>
+	</div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow mb-12">
+                <div class="card-header py-12">
+                    <h6 class="m-0 font-weight-bold text-primary">Convidar</h6>
+                </div>
+                <div class="card-body">
+                    <div class="col-lg-12 col-xs-12">
+                        <%= form_for([:app, @invite]) do |f| %>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12">
+                                <label>Email</label>
+                                <%= f.email_field :email, class:"form-control", placeholder:"Ex.: contato@freelatime.com.br", required:"required" %>
+                            </div>
+                            <div class="form-group col-lg-12 col-xs-12">
+                                <%= f.submit "Enviar", class:"btn btn-primary", data: { disable_with: "Aguarde..." } %>
+                            </div>
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Convites</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered rounded" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Data envio</th>
+                            <th>Link</th>
+                            <th>Expira</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @invites.each do |invite| %>
+                            <tr>
+                                <td><%= invite.email %></td>
+                                <td><%= invite.created_at.strftime("%d/%m/%Y") %></td>
+                                <td><%= invite.link %></td>
+                                <td><%= l(invite.due_date) %></td>
+                                <td><%= invite.status %></td>
+                                <td><%= invite.invite_type %></td>
+
+                                <td width="8%" class="text-center">
+                                    <%# action buttons %>
+                                    <% if ((invite.invite_type == "Guest") && (invite.status != "Aceito")) %>
+                                        <%= link_to app_invite_accept_invite_path(invite.id), class: "btn btn-success rounded btn-sm", data: {confirm: "Você deseja aceitar este convite?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Aceitar"}, method: :put do  %>
+                                            <i class="fas fa-fw fa-check"></i>
+                                        <% end %>
+                                    <% end %>
+                                    <%= link_to app_invite_path(invite.id), class: "btn btn-danger rounded btn-sm", data: {confirm: "Você deseja este convite?", 'toggle': "tooltip", 'placement': "top", 'original-title': "Excluir"}, method: :delete do  %>
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    <% end %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

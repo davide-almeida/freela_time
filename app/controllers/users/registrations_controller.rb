@@ -6,7 +6,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    # raise
     super
   end
 
@@ -14,9 +13,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super
     
-    @workgroup = WorkGroup.new(name: "Grupo #{@user.first_name}", description: "Grupo de trabalho #{@user.first_name}", owner_user_id: @user.id)
-    @workgroup.save
-    UserWorkGroup.create!(user_id: @user.id, work_group_id: @workgroup.id)
+    # add group to new user
+    # @workgroup = WorkGroup.new(name: "Grupo #{@user.first_name}", description: "Grupo de trabalho #{@user.first_name}", owner_user_id: @user.id)
+    # @workgroup.save
+    # UserWorkGroup.create!(user_id: @user.id, work_group_id: @workgroup.id)
   end
 
   # GET /resource/edit
@@ -57,7 +57,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
+    # raise
+    # add user host to user invited and update invite status if present
+    if params['user']['invite'].present?
+      # add user_id to host_id
+      host_params = Rails.application.message_verifier('host').verify(params['user']['invite']).split('|')
+      # update invite status to "aceito"
+      @invite = Invite.find(host_params[1].to_i)
+      if @invite.status == "Pendente"
+        @invite.update(:status => "Aceito")
+        # set host_id
+        @user.update(:host_id => host_params[0].to_i)
+        # add contact to host and add contact to new user
+        Friendship.create!(user_id: host_params[0].to_i, friend_id: @user.id) #User Host have User Friend like a friend
+        Friendship.create!(user_id: @user.id, friend_id: host_params[0].to_i) #User Friend have User Host like a friend
+      else
+        @user.update(:host_id => nil)
+      end
+    else
+      @user.update(:host_id => nil)
+    end
+
     super(resource)
+
+    app_dashboard_path
   end
 
   # The path used after sign up for inactive accounts.

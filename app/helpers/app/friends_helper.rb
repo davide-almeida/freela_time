@@ -1,0 +1,2 @@
+module App::FriendsHelper
+end

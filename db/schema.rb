@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_181821) do
+ActiveRecord::Schema.define(version: 2021_08_13_112341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,19 @@ ActiveRecord::Schema.define(version: 2021_08_06_181821) do
     t.index ["user_id"], name: "index_in_payments_on_user_id"
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "email"
+    t.string "link"
+    t.date "due_date"
+    t.integer "status"
+    t.integer "invite_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "host_invite_id"
+    t.index ["user_id"], name: "index_invites_on_user_id"
+  end
+
   create_table "project_storages", force: :cascade do |t|
     t.string "name"
     t.bigint "project_id", null: false
@@ -198,6 +211,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_181821) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
+    t.integer "host_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -221,6 +235,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_181821) do
   add_foreign_key "in_parcels", "in_payments"
   add_foreign_key "in_payments", "projects"
   add_foreign_key "in_payments", "users"
+  add_foreign_key "invites", "users"
   add_foreign_key "project_storages", "projects"
   add_foreign_key "project_storages", "users"
   add_foreign_key "projects", "companies"
