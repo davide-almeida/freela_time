@@ -11,3 +11,14 @@ Tecnologias:
 
 Observações:
 * O projeto foi iniciado no dia 22/03/2021 e tem como objetivo ser concluído até o início de julho de 2021.
+
+Preview:
+
+Página de Login
+![01](https://user-images.githubusercontent.com/85287720/158467449-38f888f9-4219-493f-9e5a-a33798ccce4b.PNG)
+
+Dashboard
+![02](https://user-images.githubusercontent.com/85287720/158468543-2e85bac4-b1e8-4d31-86e8-298843c8ff7f.PNG)
+
+Página de Tarefas
+![03](https://user-images.githubusercontent.com/85287720/158468778-ae6c2737-cfca-4e69-9640-288ecc5f4321.PNG)
