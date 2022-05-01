@@ -1,16 +1,15 @@
 # README
 
-Este é o Freela Time, um projeto que faz parte de um trabalho de conclusão de curso (TCC) e está sendo desenvolvido por Davide Almeida e Matheus Pinheiro,
-ambos do curso de bacharelado em Sistemas de Informações.
+Este é o Freela Time, um projeto pessoal que faz parte do meu trabalho de conclusão do curso de Sistemas de Informações (TCC).
 
-O Freela Time é um sistema de gestão de tarefas para desenvolvedores "freelancers".
+O Freela Time é um sistema de gestão de tempo e tarefas para desenvolvedores "freelancers".
 
 Tecnologias:
 * Ruby 3.0.0
 * Rails 6.1.3
 
 Observações:
-* O projeto foi iniciado no dia 22/03/2021 e tem como objetivo ser concluído até o início de julho de 2021.
+* O projeto foi iniciado no dia 22/03/2021 e foi concluído em julho de 2021. Porém, sempre que tenho tempo gosto de adicionar novos recursos para treinar minhas habilidades com o Rails.
 
 Preview:
 
