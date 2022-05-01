@@ -7,6 +7,9 @@ O Freela Time é um sistema de gestão de tempo e tarefas para desenvolvedores "
 Tecnologias:
 * Ruby 3.0.0
 * Rails 6.1.3
+* Sidekiq
+* Redis
+* Postgresql
 
 Observações:
 * O projeto foi iniciado no dia 22/03/2021 e foi concluído em julho de 2021. Porém, sempre que tenho tempo gosto de adicionar novos recursos para treinar minhas habilidades com o Rails.
